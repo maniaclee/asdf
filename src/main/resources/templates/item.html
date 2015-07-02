@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${item.title}"></title>
-    <script  th:inline="javascript">
+    <script th:inline="javascript">
         user = [[${session.USER}]];
         itemPsyco = [[${item}]];
     </script>
@@ -32,10 +32,10 @@
 <div th:include="components :: nav"></div>
 <div class="container main-content">
     <component-logo-search></component-logo-search>
-    <div class="row block-white no-padding  " id="item-briefInfo"  >
+    <div class="row block-white no-padding  " id="item-briefInfo">
         <div class="col-sm-3  no-padding" align="center">
             <div class="thumbnail no-border" style="padding-top: 30px">
-                <img  th:attr="src=${item.imageUrl}">
+                <img th:attr="src=${item.imageUrl}">
 
                 <div class="caption">
                 </div>
@@ -50,31 +50,32 @@
             </p>
 
             <p class="row">
-                <span class="col-sm-3">年代</span> <span class="col-sm-9" th:text="${item.age==null?'未知':item.age.name}"  ></span>
+                <span class="col-sm-3">类别</span>
+                <span class="col-sm-9" th:text="${item.type==null?'未知':item.type.name}"></span>
             </p>
 
             <p class="row">
                 <span class="col-sm-3">所在地</span>
                 <!--<span class="col-sm-9"     data-bind="text:$root.formatCity(location)"></span>-->
-                <span class="col-sm-9"       th:text="${@fn.formatCity(item.location)}"></span>
+                <span class="col-sm-9" th:text="${@fn.formatCity(item.location)}"></span>
             </p>
 
             <p class="row">
-                <span class="col-sm-3">状态</span> <span class="col-sm-9"  th:text="${item.status}" ></span>
+                <span class="col-sm-3">状态</span> <span class="col-sm-9" th:text="${item.status}"></span>
             </p>
 
             <p class="row">
-                <span class="col-sm-3">品相</span> <span class="col-sm-9" th:text="${item.integrity}" ></span>
+                <span class="col-sm-3">品相</span> <span class="col-sm-9" th:text="${item.integrity}"></span>
             </p>
 
             <p class="row">
                 <span class="col-sm-3">上架时间</span>
-                <span class="col-sm-9" th:text="${@fn.formatDate(item.dateUpload)}" ></span>
+                <span class="col-sm-9" th:text="${@fn.formatDate(item.dateUpload)}"></span>
             </p>
 
             <p class="row">
                 <span class="col-sm-3">更新时间</span>
-                <span class="col-sm-9"  th:text="${@fn.formatDate(item.dateLastModify)}" ></span>
+                <span class="col-sm-9" th:text="${@fn.formatDate(item.dateLastModify)}"></span>
             </p>
             <hr>
             <div class="row ">
@@ -86,17 +87,23 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-3  no-padding" align="center"  id="owner-panel">
+        <div class="col-sm-3  no-padding" align="center" id="owner-panel" style="font-size: small">
             <hr>
-            <h3   th:text="${item.user.name}"  class="color-theme "></h3>
+            <h3 th:text="${store==null?'未知店家':store.name}" class="color-theme "></h3>
             <hr>
-            <div class="row" align="left">
-                <span class="col-sm-4">所在地:</span>
-                <span class="col-sm-8"  th:text ="${@fn.formatCity(item.user.city)}"></span>
+            <div class="row" align="left" style="">
+                <span class="col-sm-4">掌柜:</span> <span class="col-sm-8" th:text="${item.user.name}"></span>
+                <span class="col-sm-4">地区:</span>
+                <span class="col-sm-8" th:text="${@fn.formatCity(item.user.city)}"></span>
+                <span class="col-sm-4">联系:</span> <span class="col-sm-8">保密</span>
             </div>
             <div class="row" align="left">
                 <!-- 					<span class="col-sm-4">邮箱:</span> <span class="col-sm-8" data-bind="text:email"></span> -->
-                <span class="col-sm-4">邮箱:</span> <span class="col-sm-8">保密</span>
+
+            </div>
+            <div class="row">
+                <div class="col-lg-6"><a class="btn btn-primary" href=""> 进入店铺</a></div>
+                <div class="col-lg-6"><a class="btn btn-primary" href=""> 收藏店铺</a></div>
             </div>
         </div>
     </div>
@@ -111,10 +118,10 @@
             <div class="tab-pane fade in active" id="tab1detail">
                 <h3 class="color-theme">藏品信息：</h3>
 
-                <p th:text="${item.breifInfo}"  ></p>
+                <p th:text="${item.breifInfo}"></p>
 
-                <div th:each="pic:${@fn.decodeJsonArray(item.detailPicUrls)}"  align="center">
-                    <img   th:attr="src=${pic}"/>
+                <div th:each="pic:${@fn.decodeJsonArray(item.detailPicUrls)}" align="center">
+                    <img th:attr="src=${pic}"/>
                 </div>
             </div>
             <div class="tab-pane fade" id="tab2proccess">Warning 2</div>

@@ -128,7 +128,7 @@ public class PageController {
         Store store = storeR.findOne(id);
         if (store == null)
             return error("该商店不存在");
-        typeR.findAll().forEach(t -> re.addObject(t.getId()+"", repAntique.findByUserAndType(store.getUser().getId(), t.getId(), new PageRequest(0,8))));
+        typeR.findAll().forEach(t -> re.addObject(t.getId() + "", repAntique.findByUserAndType(store.getUser().getId(), t.getId(), new PageRequest(0, 8))));
         return re.addObject("store", store);
     }
 
@@ -168,7 +168,9 @@ public class PageController {
         if (!repAntique.exists(id))
             return error("对不起，你访问的物品不存在或已被移除");
         ModelAndView re = new ModelAndView("item");
-        re.addObject("item", repAntique.findOne(id));
+        Antique item = repAntique.findOne(id);
+        re.addObject("item", item);
+        re.addObject("store", storeR.findByUser(item.getUser().getId()));
         return re;
     }
 
