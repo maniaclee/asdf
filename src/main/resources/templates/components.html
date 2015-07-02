@@ -1,0 +1,117 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<div th:fragment="logo">
+    <a href="/index"><img src="../static/img/logo.png" style="width: 300px; height: 130px"/></a>
+</div>
+<div th:fragment="subjectChooser">
+    <div class="dropdown " id="type-chooser-element">
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true" style="min-width: 150px;">
+            <span>选择学科</span> <span class="caret"></span></button>
+        <ul class="dropdown-menu" role="menu" style="height:400px;  ">
+            <li class="dropdown dropdownTopHover" data-id="0"><a><span>学科不限</span></span></a></li>
+            <li class="dropdown dropdownTopHover" th:each="type: ${application.subjects_all}">
+                <a th:attr="data-id=${type.id}"><span th:text="${type.name}"></span><span class="caret-right "></span></a>
+                <ul class="dropdown-menu">
+                    <li th:each="child:${type.children}">
+                        <a th:text="${child.name}" th:attr="data-id=${child.id}"></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <input type="text" style="display: none" name="type">
+    </div>
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            var el = $('#type-chooser-element ');
+            el.find('li a').click(function () {
+                console.log(el.find('button span'));
+                el.find('button span').first().text($(this).text());
+                el.find('input').val($(this).attr('data-id'));
+            });
+        });
+    </script>
+</div>
+<div th:fragment="search(key,target)">
+    <div class="row" style="margin-top: 5px;" id="logo-area">
+        <div class="col-sm-3 no-padding" align="center">
+            <div th:include="components ::logo"></div>
+        </div>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-8 no-padding ">
+            <form role="search" action="search" method="get" th:attr="target=${target}" style="margin-top: 40px;">
+                <div class="input-group  search-component">
+                    <input type="text" name="key" class="form-control" placeholder="请输入关键字" th:value="${key}">
+                    <span class="input-group-btn" style="border: none"> <input class="btn btn-default" type="submit" value="搜索"></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div th:fragment="footer">
+    <div style="position: relative; bottom: -60px;height:auto">
+        <div class="footer" style="position: absolute; bottom: 0; width: 100%;" align="center">
+            <span><a href="/aboutUs" target="_blank"> 关于我们</a></span> <span><a href="/partner" target="_blank"> 合作伙伴</a></span>
+            <span><a href="/law" target="_blank"> 法律声明</a></span> <span class="muted"> © 2015 29.com 版权所有</span></div>
+    </div>
+</div>
+<div th:fragment="nav">
+    <div class="navbar-primary">
+        <nav class="navbar navbar-default" style="padding: 0px 100px; margin: 0">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
+                        <span class="icon-bar"></span> <span class="icon-bar"></span></button>
+                    <a class="navbar-brand" href="index">29教授网店</a></div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li th:unless="${ session.USER}"><a href="login">登录</a></li>
+                        <li th:unless="${ session.USER}"><a href="regist">注册</a></li>
+                        <li th:if="${ session.USER}" class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span th:text="${session.USER.email}"></span>
+                                <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="logout">退出</a></li>
+                                <li><a href="my" target="blank">我的</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<div th:fragment="nav_middle">
+    <div class="row">
+        <div class="navbar-primary ">
+            <div class="  navbar-sm col-sm-12" style="margin: 0px; padding: 0px">
+                <div class="navbar navbar-default " style="border: none; padding: 0px;">
+                    <!--change nav to div , thmeleaf only alow single nav in the page ! fuck-->
+                    <div class="container-fluid">
+                        <div class="navbar-header"><a class="navbar-brand" href="/index">首页</a></div>
+                        <div class="collapse navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="/search" target="_blank">专利 <span class="sr-only">(current)</span></a>
+                                </li>
+                                <li><a href="/news" target="_blank">技术</a></li>
+                                <li><a href="/businessKnowledge" target="_blank">产品</a></li>
+                                <li><a href="/businessKnowledge" target="_blank">论文</a></li>
+                                <li><a href="/aboutUs" target="_blank">关于我们</a></li>
+                                <li><a href="/contactUs" target="_blank">联系我们</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

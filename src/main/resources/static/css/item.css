@@ -1,0 +1,51 @@
+@CHARSET "UTF-8";
+
+.action-large-btn {
+	border-radius: 0px;
+}
+
+#owner-panel {
+	border-left: 1px solid #eee;
+	padding: 20px
+}
+
+#owner-panel .row {
+	margin-top: 10px;
+}
+
+#item-briefInfo {
+	height: 360px;
+	border: 1px solid #ddd;
+}
+
+#item-briefInfo>div {
+	height: 100%;
+}
+
+#item-briefInfo  .thumbnail {
+	background: none;
+}
+
+#item-briefInfo  .thumbnail img {
+	width: 300px;
+	height: 300px;
+	margin: 0px;
+}
+
+#tab1detail img {
+	width: 80%;
+	margin: 10px 0px;
+}
+
+#item-briefInfo-center {
+	/* 	border:1px solid green; */
+	margin: 0px;
+}
+
+#item-briefInfo-center>.row {
+	height: 20px;
+}
+
+#item-briefInfo-center>.row span:first-child {
+	color: grey;
+}

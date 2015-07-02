@@ -1,0 +1,61 @@
+<!DOCTYPE   html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title  > gdocs</title>
+    <script type="text/javascript" src="../static/lib/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="../static/lib/Underscore-1.7.0.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/lib/bootstrap/css/bootstrap.css"/>
+    <script type="text/javascript" src="../static/lib/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../static/lib/knockout.js"></script>
+
+    <script type="text/javascript" src="../static/lib/bootstrap-table-master/src/bootstrap-table.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/lib/bootstrap-table-master/src/bootstrap-table.css"/>
+
+    <script type="text/javascript" src="../static/lib/BootstrapDialog/js/bootstrap-dialog.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/lib/BootstrapDialog/css/bootstrap-dialog.min.css"/>
+
+    <link rel="stylesheet" type="text/css" href="../static/lib/font-awesome/css/font-awesome.min.css"/>
+    <script type="text/javascript" src="../static/lib/moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="../static/lib/google-docs-viewer-jquery/jquery.gdocsviewer.js"></script>
+    <script type="text/javascript" src="../static/lib/PDFObject-master/pdfobject.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../static/css/common.css"/>
+    <script type="text/javascript" src="../static/js/core.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="../static/css/item.css"/>
+</head>
+<body>
+<component-nav></component-nav>
+<div id="pdf" style="height:500px;"></div>
+<div class="container main-content">
+    <!--<iframe src="http://docs.google.com/gview?url=http://infolab.stanford.edu/pub/papers/google.pdf&embedded=true" style="width:600px; height:500px;" frameborder="0"></iframe>-->
+    <!--<iframe src="http://docs.google.com/gview?url=pdf/a.pdf&embedded=true" style="width:600px; height:500px;" frameborder="0"></iframe>-->
+    <!--<a href="file:///Users/psyco/Downloads/29教授网店参考/蜂巢创新网.pdf" class="embed">Download file</a>-->
+    <!--<a href="http://samplepdf.com/sample.pdf" class="embed">Download file</a>-->
+</div>
+<script>
+    $(document).ready(function () {
+//        $('a.embed').gdocsViewer({width: 400, height: 500});
+        var params = {
+
+            url: "/data-upload/a.pdf",
+//            url: "/pdf/a.pdf",
+
+
+            pdfOpenParams: {
+
+                navpanes: 0,
+                toolbar: 0,
+                statusbar: 0,
+                view: "FitV"
+
+            }
+        };
+        var myPDF = new PDFObject(params).embed("pdf");
+    });
+</script>
+</body>
+
+</html>
