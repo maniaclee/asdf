@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title data-bind="text:'个人信息 '+user().name"></title>
+    <!--<script>-->
+    <!--user =-->
+    <!--<-->
+    <!--%= session.getAttribute("USER") % >-->
+    <!--;-->
+    <!--CITY_ALL =-->
+    <!--<-->
+    <!--%= application.getAttribute("CITY_ALL") % >-->
+    <!--;-->
+    <!--TYPETAG_ALL =-->
+    <!--<-->
+    <!--%= application.getAttribute("TYPETAG_ALL") % >-->
+    <!--;-->
+    <!--AGE_ALL =-->
+    <!--<-->
+    <!--%= application.getAttribute("AGE_ALL") % >-->
+    <!--;-->
+    <!--</script>-->
+    <script type="text/javascript" src="../static/lib/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="../static/lib/Underscore-1.7.0.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/lib/bootstrap/css/bootstrap.css"/>
+    <script type="text/javascript" src="../static/lib/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../static/lib/knockout.js"></script>
+
+    <script type="text/javascript"
+            src="../static/lib/bootstrap-table-master/src/bootstrap-table.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="../static/lib/bootstrap-table-master/src/bootstrap-table.css"/>
+
+    <link rel="stylesheet" type="text/css"
+          href="../static/lib/font-awesome/css/font-awesome.min.css"/>
+
+    <script type="text/javascript"
+            src="../static/lib/jQuery-Client-Side-Image-Cropping-Plugin-with-Canvas-CSS3-SimpleCropper/scripts/jquery.Jcrop.js"></script>
+    <script type="text/javascript"
+            src="../static/lib/jQuery-Client-Side-Image-Cropping-Plugin-with-Canvas-CSS3-SimpleCropper/scripts/jquery.SimpleCropper.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="../static/lib/jQuery-Client-Side-Image-Cropping-Plugin-with-Canvas-CSS3-SimpleCropper/css/style.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="../static/lib/jQuery-Client-Side-Image-Cropping-Plugin-with-Canvas-CSS3-SimpleCropper/css/jquery.Jcrop.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="../static/lib/bootstrap-fileinput/css/fileinput.min.css"/>
+    <script type="text/javascript"
+            src="../static/lib/bootstrap-fileinput/js/fileinput.min.js"></script>
+
+    <link rel="stylesheet" type="text/css"
+          href="../static/lib/BootstrapDialog/css/bootstrap-dialog.min.css"/>
+    <script type="text/javascript"
+            src="../static/lib/BootstrapDialog/js/bootstrap-dialog.min.js"></script>
+    <script type="text/javascript" src="../static/lib/bootbox.js"></script>
+
+    <script type="text/javascript"
+            src="../static/lib/bootstrap-validator/dist/validator.min.js"></script>
+    <script type="text/javascript" src="../static/lib/moment/min/moment.min.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="../static/css/common.css"/>
+    <script type="text/javascript" src="../static/js/core.js"></script>
+
+    <script type="text/javascript" src="../static/js/user.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/css/user.css"/>
+</head>
+<body>
+<!--<div th:include="components :: nav"></div>-->
+
+<div class="container main-content" style="min-height: 800px; margin-top: 20px;">
+    <div class="row">
+        <div class="col-md-12" id="settings-content">
+            <div class="row" id="my-upload">
+                <div class="panel panel-default">
+                    <div class="panel-heading block-red">上传物品</div>
+                    <div class="panel-body">
+                        <form class="form-horizontal" action="upload/item" method="post"
+                              enctype="multipart/form-data" id="itemUploadForm"
+                              data-toggle="validator" role="form"
+                              data-bind="with:$root.antiqueEdit,submit:uploadItem">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label color-theme ">标题</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" name="title" class="form-control"
+                                           placeholder="物品标题/名称" data-bind="value:title" required
+                                           data-error="标题不能为空">
+
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label color-theme ">价格</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="price"
+                                           pattern="^\d+(\.\d{1,2})?$" data-error="请输入数字如'100'或'134.35'"
+                                           placeholder="物品价格" data-bind="value:price">
+
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label color-theme">年代</label>
+
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="age"
+                                            data-bind="options: $root.AGE_ALL, optionsValue:'id', optionsText: 'name',  optionsCaption: '年代'">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label color-theme">描述信息</label>
+
+                                <div class="col-sm-10">
+										<textarea class="form-control" name="breifInfo" rows="3"
+                                                  data-bind="value:breifInfo"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label color-theme">类别</label>
+
+                                <div class="col-sm-10">
+                                    <!-- 										<div class="dropdown"> -->
+                                    <!-- 											<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true"> -->
+                                    <!-- 												<span id="dropdownTypeTitle">选择类别</span> <span class="caret"></span> -->
+                                    <!-- 											</button> -->
+                                    <!-- 											<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" data-bind="foreach:$root.types"> -->
+                                    <!-- 												<li class="dropdown dropdownTopHover"><a href="#"><span data-bind="text:$data.name"></span><span class="caret-right "></span></a> -->
+                                    <!-- 													<ul class="dropdown-menu" data-bind="foreach:$data.children"> -->
+                                    <!-- 														<li data-bind="click:$root.UI_selectType"><a data-bind="text:$data.name;"></a></li> -->
+                                    <!-- 													</ul></li> -->
+                                    <!-- 											</ul> -->
+                                    <!-- 											<input type="text" style="display: none" name="type" data-bind="value:typeValue"> -->
+                                    <!-- 										</div> -->
+                                    <component-type-chooser params="types:$root.TYPETAG_ALL"></component-type-chooser>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label color-theme">所在地</label>
+
+                                <div class="col-sm-10">
+                                    <component-city-chooser params="cities:$root.CITY_ALL"></component-city-chooser>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label color-theme ">标题图片</label>
+
+                                <div class="col-sm-10">
+                                    <div class="cropme" style="width: 100px; height: 100px;"
+                                         id="itemImageTitle"></div>
+                                    <input type="text" style="display: none" name="imageUrl">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label color-theme">图片详情</label>
+
+                                <div class="col-sm-10">
+                                    <input id="input-702" name="shit" type="file" multiple=true
+                                           class="file-loading" data-upload-url="/site/file-upload"
+                                           data-max-file-count="10">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <!-- 										<button type="submit" class="btn btn-success btn-lg" data-bind="click:$root.uploadItem">上传</button> -->
+                                    <button type="submit" class="btn btn-success btn-lg">上传</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="modal fade" id="userUpgradeModal" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title text-success" id="myModalLabel">升级会员</h4>
+            </div>
+            <div class="modal-body" data-bind="if:$root.user()!=null">
+                <div class="panel panel-default">
+                    <div class="panel-heading block-red">升级会员</div>
+                    <div class="panel-body">
+                        <!-- 							<form> -->
+                        <!-- 								<select> -->
+                        <!-- 									<option value="1">菜鸟</option> -->
+                        <!-- 									<option value="1">初级</option> -->
+                        <!-- 									<option value="1">中级</option> -->
+                        <!-- 									<option value="1">高级</option> -->
+                        <!-- 									<option value="1">VIP</option> -->
+                        <!-- 								</select> <input type="submit" class="btn btn-success" value="提交"> -->
+                        <!-- 							</form> -->
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label color-theme"><input
+                                        type="radio" name="level" value="2" checked>菜鸟</label>
+
+                                <div class="col-sm-9">
+                                    <label class="  control-label">免费</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label color-theme"><input
+                                        type="radio" name="level" value="1" checked>初级</label>
+
+                                <div class="col-sm-9">
+                                    <label class="  control-label">？/月</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label color-theme"><input
+                                        type="radio" name="level" value="0" checked>中级</label>
+
+                                <div class="col-sm-9">
+                                    <label class="  control-label">？￥/月</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label color-theme"><input
+                                        type="radio" name="level" value="0" checked>高级</label>
+
+                                <div class="col-sm-9">
+                                    <label class="  control-label">？￥/月</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label color-theme"><input
+                                        type="radio" name="level" value="0" checked>VIP</label>
+
+                                <div class="col-sm-9">
+                                    <label class="  control-label">？￥/月</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <button type="button" class="btn btn-success  "
+                                            data-bind="click:$root.userUpgrade">升级
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="itemEditModal" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title text-success" id="myModalLabel">修改</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" action="upload/item" method="post"
+                      enctype="multipart/form-data" id="itemMofityForm"
+                      data-toggle="validator" role="form"
+                      data-bind="with:$root.itemToModify,submit:modifyItemSubmit">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label color-theme ">标题</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" name="title" class="form-control"
+                                   placeholder="物品标题/名称" data-bind="value:title" required
+                                   data-error="标题不能为空">
+
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label color-theme ">价格</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="price"
+                                   pattern="^\d+(\.\d{1,2})?$" data-error="请输入数字如'100'或'134.35'"
+                                   placeholder="物品价格" data-bind="value:price">
+
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label color-theme">年代</label>
+
+                        <div class="col-sm-10">
+                            <select class="form-control" name="age"
+                                    data-bind="options: $root.ages, optionsValue:'id', optionsText: 'name',  optionsCaption: '年代'">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label color-theme">描述信息</label>
+
+                        <div class="col-sm-10">
+								<textarea class="form-control" name="breifInfo" rows="3"
+                                          data-bind="value:breifInfo"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label color-theme">类别</label>
+
+                        <div class="col-sm-10">
+                            <component-type-chooser params="types:$root.types"></component-type-chooser>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label color-theme">所在地</label>
+
+                        <div class="col-sm-10">
+                            <component-city-chooser params="select:location"></component-city-chooser>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label color-theme ">标题图片</label>
+
+                        <div class="col-sm-10">
+                            <div class="cropme" id="cropme-profile-image-item-modify">
+                                <img data-bind="attr:{src:imageUrl}"
+                                     style="width: 150px; height: 150px;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label color-theme">图片详情</label>
+
+                        <div class="col-sm-10">
+                            <div data-bind="foreach:detailPicUrls"
+                                 style="margin-bottom: 20px;">
+                                <div class="_item-modify-detail-pics">
+                                    <img data-bind="attr:{src:$data}"
+                                         style="width: 150px; height: 150px;">
+                                    <button class="btn btn-success"
+                                            data-bind="attr:{name:$data},click:$root.itemModify_removeDetailPic">删除
+                                    </button>
+                                </div>
+                            </div>
+                            <input id="itemModityAddDetailPic" name="shit" type="file"
+                                   multiple=true class="file-loading"
+                                   data-upload-url="/site/file-upload" data-max-file-count="10">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <!-- 										<button type="submit" class="btn btn-success btn-lg" data-bind="click:$root.uploadItem">上传</button> -->
+                            <button type="submit" class="btn btn-success btn-lg">保存修改</button>
+                            <button type="button" class="btn btn-success btn-lg">取消</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:include="components :: footer"></div>
+
+</body>
+
+</html>

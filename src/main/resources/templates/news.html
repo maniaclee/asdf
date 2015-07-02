@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>新闻中心</title>
+<script>
+    user =
+<%=session.getAttribute("USER")%>
+    ;
+</script>
+<script type="text/javascript" src="../static/lib/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="../static/lib/Underscore-1.7.0.js"></script>
+<link rel="stylesheet" type="text/css" href="../static/lib/bootstrap/css/bootstrap.css" />
+<script type="text/javascript" src="../static/lib/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="../static/lib/knockout.js"></script>
+
+<script type="text/javascript" src="../static/lib/bootstrap-table-master/src/bootstrap-table.js"></script>
+<link rel="stylesheet" type="text/css" href="../static/lib/bootstrap-table-master/src/bootstrap-table.css" />
+
+<link rel="stylesheet" type="text/css" href="../static/lib/font-awesome/css/font-awesome.min.css" />
+
+<link rel="stylesheet" type="text/css" href="../static/css/common.css" />
+<script type="text/javascript" src="../static/js/core.js"></script>
+
+<script type="text/javascript" src="../static/js/newsCenter.js"></script>
+<link rel="stylesheet" type="text/css" href="../static/css/newsCenter.css" />
+</head>
+<body>
+	<component-nav></component-nav>
+	<div align="center">
+		<div class="row" style="width: 80%; margin-top: 30px;">
+			<div class="panel panel-default">
+				<div class="panel-heading" style="height: 40px;">
+					<span style="float: left;">新闻中心</span>
+				</div>
+				<div class="panel-body">
+					<table class="table table-hover">
+						<tbody data-bind="foreach:articles">
+							<tr>
+								<td><a data-bind="text:$data.title"></a></td>
+								<td>15-02-03</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<component-footer></component-footer>
+
+</body>
+
+</html>

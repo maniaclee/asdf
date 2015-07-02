@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>后台管理</title>
+<script>
+    user =
+<%=session.getAttribute("USER")%>
+    ;
+</script>
+<script type="text/javascript" src="lib/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="lib/Underscore-1.7.0.js"></script>
+<link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.css" />
+<script type="text/javascript" src="lib/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="lib/knockout.js"></script>
+
+<script type="text/javascript" src="lib/bootstrap-table-master/src/bootstrap-table.js"></script>
+<link rel="stylesheet" type="text/css" href="lib/bootstrap-table-master/src/bootstrap-table.css" />
+
+<link rel="stylesheet" type="text/css" href="lib/font-awesome/css/font-awesome.min.css" />
+
+<script type="text/javascript" src="lib/jQuery-Client-Side-Image-Cropping-Plugin-with-Canvas-CSS3-SimpleCropper/scripts/jquery.Jcrop.js"></script>
+<script type="text/javascript" src="lib/jQuery-Client-Side-Image-Cropping-Plugin-with-Canvas-CSS3-SimpleCropper/scripts/jquery.SimpleCropper.js"></script>
+<link rel="stylesheet" type="text/css" href="lib/jQuery-Client-Side-Image-Cropping-Plugin-with-Canvas-CSS3-SimpleCropper/css/style.css" />
+<link rel="stylesheet" type="text/css" href="lib/jQuery-Client-Side-Image-Cropping-Plugin-with-Canvas-CSS3-SimpleCropper/css/jquery.Jcrop.css" />
+<link rel="stylesheet" type="text/css" href="lib/bootstrap-fileinput/css/fileinput.min.css" />
+<script type="text/javascript" src="lib/bootstrap-fileinput/js/fileinput.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="lib/BootstrapDialog/css/bootstrap-dialog.min.css" />
+<script type="text/javascript" src="lib/BootstrapDialog/js/bootstrap-dialog.min.js"></script>
+
+<script type="text/javascript" src="lib/bootstrap-validator/dist/validator.min.js"></script>
+<script type="text/javascript" src="lib/moment/min/moment.min.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="css/common.css" />
+<script type="text/javascript" src="js/core.js"></script>
+
+<script type="text/javascript" src="js/admin.js"></script>
+<link rel="stylesheet" type="text/css" href="css/user.css" />
+</head>
+<body>
+	<component-nav></component-nav>
+
+	<div class="container main-content" style="min-height: 800px; margin-top: 20px;">
+		<div class="row">
+			<div class="col-md-2 block-red no-padding">
+				<div align="center">
+					<div class="thumbnail thumbnail-user" data-bind="with:user">
+						<img data-bind="attr:{src:imageUrl}">
+						<div class="caption">
+							<p data-bind="text:name"></p>
+						</div>
+					</div>
+				</div>
+				<div class="list-group-item list-group-item-success   disabled text-left">设置</div>
+				<div id="my-nav">
+					<a href="#my-profile" class="list-group-item   text-left"> 个人资料 </a> <a href="#my-distinguish" class="list-group-item  text-left">待鉴定</a> <a
+						href="#my-trade" class="list-group-item  text-left">待交换</a>
+				</div>
+			</div>
+			<div class="col-md-10" id="settings-content">
+				<div class="row" id="my-profile">
+					<div class="panel panel-default">
+						<div class="panel-heading block-red">个人信息</div>
+						<div class="panel-body">
+							<form class="form-horizontal" id="profile-form" data-bind="with :user" role="form" data-toggle="validator" action="upload/profile"
+								method="post">
+								<div class="form-group">
+									<label class="col-sm-2 control-label color-theme ">头像</label>
+									<div class="col-sm-10">
+										<div class="cropme" id="cropme-profile-image-upload">
+											<img data-bind="attr:{src:imageUrl}" id="profile-image-upload" style="width: 150px; height: 150px;">
+										</div>
+									</div>
+								</div>
+								<input name="id" type="text" hidden="true" data-bind="value:id">
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label color-theme ">邮箱</label>
+									<div class="col-sm-10">
+										<label class=" control-label " data-bind="text:email">邮箱</label>
+										<!-- 										<input type="email" class="form-control  " name="email" placeholder="邮箱" data-error="邮箱格式不正确" disabled data-bind="value:email"> -->
+										<!-- 										<div class="help-block with-errors"></div> -->
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label color-theme">用户名</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" name="name" placeholder="昵称/用户名" data-bind="value:name" required>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label color-theme">手机</label>
+									<div class="col-sm-10">
+										<input type="text" name="phone" class="form-control" placeholder="手机号码" pattern="^1\d{10}$" data-error="手机号码格式错误">
+										<div class="help-block with-errors"></div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label color-theme">所在地</label>
+									<div class="col-sm-10">
+										<!-- 										<component-city-chooser params="select:city"></component-city-chooser> -->
+										<component-city-chooser params="select:city"></component-city-chooser>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label color-theme">性别</label>
+									<div class="col-sm-10">
+										<label class="radio-inline"> <input type="radio" name="sex" value="0" data-bind="checked: sex"> 男
+										</label> <label class="radio-inline"> <input type="radio" name="sex" value="1" data-bind="checked: sex"> 女
+										</label>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-10">
+										<button type="submit" class="btn btn-success btn-lg">保存</button>
+										<button type="button" class="btn btn-success btn-lg" data-bind="click:$root.reset">重置</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+
+				</div>
+				<div class="row" id="my-distinguish">
+					<div class="panel panel-default">
+						<div class="panel-heading block-red">待鉴定</div>
+						<div class="panel-body">
+							<table class="table table-hover thumbnail-horizontal-list">
+								<thead>
+									<tr class="success">
+										<td>宝贝</td>
+										<td>描述</td>
+										<td>状态</td>
+										<td>类型</td>
+										<td>级别</td>
+										<td>上传时间</td>
+										<td>更新时间</td>
+									</tr>
+								</thead>
+								<tbody data-bind="foreach:myDistinguish">
+									<tr>
+										<td><img data-bind="attr:{src:$data.item.imageUrl}"></td>
+										<td><a target="_blank" data-bind="text:$data.item.title,attr:{href:'antique?id='+$data.item.id}"
+											class="color-theme item-title-horizontal"> </a>
+											<p>
+												<span class="color-theme">￥</span><span data-bind="text:$data.item.price" class="color-theme"></span>
+											</p>
+											<h5 data-bind="text:$data.user.name"></h5></td>
+										<td>
+											<p data-bind="text:$root.formatDistinguishStatus($data.status)" class="color-theme"></p>
+											<button class="btn btn-success" data-bind="click:$root.UI_clickModifyStatus">修改</button>
+										</td>
+										<td>
+											<p data-bind="text:$root.formatDistinguishType($data.type)" class="color-theme"></p>
+										</td>
+										<td>
+											<p data-bind="text:$data.level" class="color-theme"></p>
+										</td>
+										<td>
+											<p data-bind="text:$root.formatTime($data.createTime)" class="color-theme"></p>
+										</td>
+										<td>
+											<p data-bind="text:$root.formatTime($data.updateTime)" class="color-theme"></p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="row" id="my-trade">
+					<div class="panel panel-default">
+						<div class="panel-heading block-red">待交换</div>
+						<div class="panel-body">
+							<table class="table table-hover thumbnail-horizontal-list bootstrapTable" data-height="540" data-sort-name="status" data-search="true">
+								<thead>
+									<tr class="success">
+										<th data-field="state" data-align="left" data-sortable="false">交换物品</th>
+										<th data-field="dis" data-align="left" data-sortable="false"></th>
+										<th data-field="state" data-align="left" data-sortable="false">被交换物品</th>
+										<th data-field="dis" data-align="left" data-sortable="false"></th>
+										<th data-field="status" data-align="left" data-sortable="true">状态</th>
+										<th data-field="createTime" data-align="left" data-sortable="true">提交时间</th>
+										<th data-field="updateTime" data-align="left" data-sortable="true">更新时间</th>
+									</tr>
+								</thead>
+								<tbody data-bind="foreach:myExchange">
+									<tr>
+										<td><img data-bind="attr:{src:$data.src.imageUrl}"></td>
+										<td><a target="_blank" data-bind="text:$data.src.title,attr:{href:'antique?id='+$data.src.id}"
+											class="color-theme item-title-horizontal"> </a>
+											<h5 data-bind="text:$data.user.name"></h5></td>
+										<td><img data-bind="attr:{src:$data.target.imageUrl}"></td>
+										<td><a target="_blank" data-bind="text:$data.target.title,attr:{href:'antique?id='+$data.target.id}"
+											class="color-theme item-title-horizontal"> </a>
+											<h5 data-bind="text:$data.user.name"></h5></td>
+										<td>
+											<p data-bind="text:$root.formatExchangeStatus($data.status)" class="color-theme"></p>
+											<button class="btn btn-success" data-bind="click:$root.UI_clickModifyStatus_exchange">修改</button>
+										</td>
+										<td data-bind="text:$root.formatTime($data.createTime)" class="color-theme"></td>
+										<td data-bind="text:$root.formatTime($data.updateTime)" class="color-theme"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div class="modal fade" id="modifyStatusModal" role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">修改</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" action="/distinguish/modify" method="post" data-bind="submit:UI_modifyStatus ">
+						<input name="id" type="text" style="display: none" data-bind="value:$root.itemToModify()?$root.itemToModify().id:''">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">状态</label>
+							<div class="col-sm-6">
+								<select class="form-control " name="status" data-bind="foreach:distinguishTypes">
+									<option name="status" data-bind="attr:{value:$index},text:$data"></option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">状态</label>
+							<div class="col-sm-6">
+								<textarea class="form-control" rows="3"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<button type="submit" class="btn btn-default">提交</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="modifyStatusExchangeModal" role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">修改</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" action="/exchange/modify" method="post" data-bind="submit:UI_modifyStatus_exchange ">
+						<input name="id" type="text" style="display: none" data-bind="value:$root.itemToModify_exchange()?$root.itemToModify_exchange().id:''">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">状态</label>
+							<div class="col-sm-6">
+								<select class="form-control " name="status" data-bind="foreach:exchangeStatus">
+									<option name="status" data-bind="attr:{value:$index},text:$data"></option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">状态</label>
+							<div class="col-sm-6">
+								<textarea class="form-control" rows="3"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<button type="submit" class="btn btn-default">提交</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<component-footer></component-footer>
+
+</body>
+
+</html>

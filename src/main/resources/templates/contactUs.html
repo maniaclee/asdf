@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>联系我们</title>
+<script type="text/javascript">
+    user =
+<%=session.getAttribute("USER")%>
+    ;
+</script>
+<script type="text/javascript" src="lib/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="lib/Underscore-1.7.0.js"></script>
+<link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.css" />
+<script type="text/javascript" src="lib/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="lib/knockout.js"></script>
+
+<script type="text/javascript" src="lib/bootstrap-table-master/src/bootstrap-table.js"></script>
+<link rel="stylesheet" type="text/css" href="lib/bootstrap-table-master/src/bootstrap-table.css" />
+
+<link rel="stylesheet" type="text/css" href="lib/font-awesome/css/font-awesome.min.css" />
+
+<script type="text/javascript" src="lib/bootstrap-validator/dist/validator.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="css/common.css" />
+<script type="text/javascript" src="js/core.js"></script>
+
+</head>
+<body style="background-color: white">
+	<component-nav></component-nav>
+	<div align="center">
+		<div class="row" style="width: 1000px; margin-top: 100px;">
+			<p class="color-theme">联系我们：</p>
+			<p class="color-theme">我们的邮箱:guwan29@163.com</p>
+		</div>
+	</div>
+	<component-footer></component-footer>
+
+</body>
+<script>
+    $(document).ready(function() {
+        ko.applyBindings({
+            user : user
+        });
+    });
+</script>
+
+</html>

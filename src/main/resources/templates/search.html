@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title data-bind="text:conditions().key+'_搜索'"></title>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        user = [[${session.USER}]];
+        conditions = [[${conditions}]];
+        result = [[${result}]];
+        TYPETAG_ALL = [[${application.TYPETAG_ALL}]];
+        AGE_ALL = [[${application.AGE_ALL}]];
+        /*]]>*/
+    </script>
+    <script type="text/javascript" src="../static/lib/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="../static/lib/Underscore-1.7.0.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/lib/bootstrap/css/bootstrap.css"/>
+    <script type="text/javascript" src="../static/lib/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../static/lib/knockout.js"></script>
+
+    <script type="text/javascript" src="../static/lib/bootstrap-table-master/src/bootstrap-table.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/lib/bootstrap-table-master/src/bootstrap-table.css"/>
+
+    <link rel="stylesheet" type="text/css" href="../static/lib/font-awesome/css/font-awesome.min.css"/>
+    <script type="text/javascript" src="../static/lib/esimakin-twbs-pagination/jquery.twbsPagination.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../static/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/index.css"/>
+    <script type="text/javascript" src="../static/js/core.js"></script>
+    <script type="text/javascript" src="../static/js/search.js"></script>
+</head>
+<body>
+<div th:include="components :: nav"></div>
+
+<div class="container main-content" align="center">
+
+    <div th:include="components :: search (${conditions.key},'')"></div>
+    <!--<component-logo-search th:attr="params=|key: \'${conditions.key}\'|"></component-logo-search>-->
+    <br/>
+
+    <div class="row" id="search-condition">
+        <div class="navbar-primary">
+            <nav class="navbar navbar-default">
+                <ul class="nav navbar-nav  sortGroup">
+                    <li><a name="id">默认 <span
+                            class="glyphicon glyphicon-arrow-down"></span></a></li>
+                    <li><a name="age.age" asc="true">年代<span
+                            class="glyphicon glyphicon-arrow-down"></span></a></li>
+                    <li><a name="price" asc="true">价格<span
+                            class="glyphicon glyphicon-arrow-down"></span></a></li>
+                </ul>
+                <form class="navbar-form navbar-left" role="search" action="search"
+                      method="get" id="searchSelectForm" data-bind="submit:search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="priceMin"
+                               placeholder="￥最低价"
+                               data-bind="value:conditions().priceMin==0?'':conditions().priceMin">
+                        - <input type="text" class="form-control" name="priceMax"
+                                 placeholder="￥最高价"
+                                 data-bind="value:conditions().priceMax==2147483647?'':conditions().priceMax">
+
+                    </div>
+                    <div class="form-group">
+                        <div th:include="components :: subjectChooser"></div>
+                    </div>
+                    <!--<div class="form-group" data-bind="if:user()!=null">-->
+                        <!--<div class="input-group ">-->
+								<!--<span class="input-group-addon "> <input type="checkbox"-->
+                                                                         <!--id="onlyShowExchange"-->
+                                                                         <!--data-bind="checked: conditions().onlyShowExchange,click:search">-->
+								<!--</span> <span class="input-group-addon">可交换</span>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <button type="submit" class="form-control btn btn-default">搜索</button>
+                </form>
+            </nav>
+        </div>
+    </div>
+    <div>
+
+    </div>
+    <div class="row">
+        <table class="table thumbnail-horizontal-list">
+            <tbody>
+            <tr th:each="data : ${result.content}">
+                <td><img th:attr="src=${data.imageUrl}"></td>
+                <td>
+                    <a th:text="${data.title}" th:attr="href='item?id='+${data.id}" class="color-theme" ></a>
+
+                    <p>
+                        <span class="color-theme">￥</span><span
+                            th:text="${data.price}" class="color-theme"></span>
+                    </p>
+
+                    <p th:text="${data.age}==null ? '不详':${data.age.name}"></p>
+                </td>
+                <td style="vertical-align: middle">
+                    <p th:text="${data.user.name}" class="color-theme"></p>
+                </td>
+                <td style="vertical-align: middle">
+                    <p th:text="${@fn.formatDate(data.dateUpload)}" class="color-theme"></p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="item col-md-3" th:each="data : ${result.content}">
+                <div class="thumbnail thumbnail-item-lg">
+                    <img alt="..." th:attr="src=${data.imageUrl}">
+
+                    <div class="caption">
+                        <p class="text-left">
+                            <span>参考价</span><span class="text-danger">￥</span><span class="text-danger" style="font-size:x-large" th:text="${data.price}"></span>
+							<span class="text-right text-success">
+								<span th:text="${data.age}==null ? '不详':${data.age.name}">参考价</span>
+							</span>
+                        </p>
+
+                        <p class="text-left">
+                            <a target="_blank" th:text="${data.title}" th:attr="href='item?id='+${data.id}">
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="">
+            <div th:if="${result.totalPages}">
+                <ul id="pagination" class="pagination-sm"
+                    style="margin: 0px; display: inline-block;"></ul>
+                <div style="display: inline-block;">
+                    <span>共</span><span th:text="${result.totalPages}"></span><span>页</span>
+                </div>
+            </div>
+            <div th:unless="${ result.totalPages} ">
+                <p>没有搜索到结果</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<component-footer></component-footer>
+</body>
+
+</html>

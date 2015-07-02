@@ -1,0 +1,274 @@
+<!DOCTYPE   html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${item.title}"></title>
+    <script  th:inline="javascript">
+        user = [[${session.USER}]];
+        itemPsyco = [[${item}]];
+    </script>
+    <script type="text/javascript" src="../static/lib/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="../static/lib/Underscore-1.7.0.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/lib/bootstrap/css/bootstrap.css"/>
+    <script type="text/javascript" src="../static/lib/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../static/lib/knockout.js"></script>
+
+    <script type="text/javascript" src="../static/lib/bootstrap-table-master/src/bootstrap-table.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/lib/bootstrap-table-master/src/bootstrap-table.css"/>
+
+    <script type="text/javascript" src="../static/lib/BootstrapDialog/js/bootstrap-dialog.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/lib/BootstrapDialog/css/bootstrap-dialog.min.css"/>
+
+    <link rel="stylesheet" type="text/css" href="../static/lib/font-awesome/css/font-awesome.min.css"/>
+    <script type="text/javascript" src="../static/lib/moment/min/moment.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/css/common.css"/>
+    <script type="text/javascript" src="../static/js/core.js"></script>
+
+
+    <!--<script type="text/javascript" src="../static/js/item.js"></script>-->
+    <link rel="stylesheet" type="text/css" href="../static/css/item.css"/>
+</head>
+<body>
+<component-nav></component-nav>
+
+<div class="container main-content">
+    <component-logo-search></component-logo-search>
+    <div class="row block-white no-padding  " id="item-briefInfo"  >
+        <div class="col-sm-3  no-padding" align="center">
+            <div class="thumbnail no-border" style="padding-top: 30px">
+                <img  th:attr="src=${item.imageUrl}">
+
+                <div class="caption">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6      " id="item-briefInfo-center" style="border-left: 1px solid #ddd">
+            <h2 th:text="${item.title}" class="color-theme"></h2>
+
+            <p class="row">
+                <span class="col-sm-3">价格</span> <span class="col-sm-9 color-theme">￥<span th:text="${item.price}" class="color-theme"
+                                                                                           style="font-size: large;"></span></span>
+            </p>
+
+            <p class="row">
+                <span class="col-sm-3">年代</span> <span class="col-sm-9" th:text="${item.age==null?'未知':item.age.name}"  ></span>
+            </p>
+
+            <p class="row">
+                <span class="col-sm-3">所在地</span>
+                <!--<span class="col-sm-9"     data-bind="text:$root.formatCity(location)"></span>-->
+                <span class="col-sm-9"       th:text="${@fn.formatCity(item.location)}"></span>
+            </p>
+
+            <p class="row">
+                <span class="col-sm-3">状态</span> <span class="col-sm-9"  th:text="${item.status}" ></span>
+            </p>
+
+            <p class="row">
+                <span class="col-sm-3">品相</span> <span class="col-sm-9" th:text="${item.integrity}" ></span>
+            </p>
+
+            <p class="row">
+                <span class="col-sm-3">上架时间</span>
+                <span class="col-sm-9" th:text="${@fn.formatDate(item.dateUpload)}" ></span>
+            </p>
+
+            <p class="row">
+                <span class="col-sm-3">更新时间</span>
+                <span class="col-sm-9"  th:text="${@fn.formatDate(item.dateLastModify)}" ></span>
+            </p>
+            <hr>
+            <div class="row ">
+                <div class="col-sm-6">
+                    <a href="#" class="  btn btn-success btn-block action-large-btn btn-lg" role="button" data-bind="click:$root.UI_distinguish">鉴定</a>
+                </div>
+                <div class="col-sm-6">
+                    <a href="#" class="  btn btn-success  btn-block action-large-btn btn-lg" role="button" data-bind="click:$root.UI_exchange">交换</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3  no-padding" align="center"  id="owner-panel">
+            <hr>
+            <h3   th:text="${item.user.name}"  class="color-theme "></h3>
+            <hr>
+            <div class="row" align="left">
+                <span class="col-sm-4">所在地:</span>
+                <span class="col-sm-8"  th:text ="${@fn.formatCity(item.user.city)}"></span>
+            </div>
+            <div class="row" align="left">
+                <!-- 					<span class="col-sm-4">邮箱:</span> <span class="col-sm-8" data-bind="text:email"></span> -->
+                <span class="col-sm-4">邮箱:</span> <span class="col-sm-8">保密</span>
+            </div>
+        </div>
+    </div>
+    <br/>
+
+    <div class="row block-white" style="min-height: 500px; padding: 2px 5px;" data-bind="with:item">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#tab1detail">藏品详情</a></li>
+            <li><a data-toggle="tab" href="#tab2proccess">交换流程</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="tab1detail">
+                <h3 class="color-theme">藏品信息：</h3>
+
+                <p th:text="${item.breifInfo}"  ></p>
+
+                <div th:each="pic:${@fn.decodeJsonArray(item.detailPicUrls)}"  align="center">
+                    <img   th:attr="src=${pic}"/>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="tab2proccess">Warning 2</div>
+        </div>
+    </div>
+</div>
+<component-footer></component-footer>
+<div class="modal fade" id="distinguishModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">鉴定</h4>
+            </div>
+            <div class="modal-body" data-bind="if:$root.user()!=null">
+                <div class="alert alert-success" role="alert">专家鉴定</div>
+                <form class="form-horizontal" action="distinguish" method="post" data-bind="submit:$root.UI_distinguish_submit">
+                    <div style="display: none;">
+                        <input type="text" name="userID" data-bind="value:$root.user().id">
+                        <input type="text" name="itemID" data-bind="value:$root.item().id">
+                        <input type="text" name="type" data-bind="value:0">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label color-theme"><input type="radio" name="level" value="3" checked>高级鉴定</label>
+
+                        <div class="col-sm-9">
+                            <label class="  control-label">三名专家</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label color-theme"><input type="radio" name="level" value="2" checked>中级鉴定</label>
+
+                        <div class="col-sm-9">
+                            <label class="  control-label">两名专家</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label color-theme"><input type="radio" name="level" value="1" checked>初级鉴定</label>
+
+                        <div class="col-sm-9">
+                            <label class="  control-label">一名专家</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label color-theme"><input type="radio" name="level" value="0" checked>免费鉴定</label>
+
+                        <div class="col-sm-9">
+                            <label class="  control-label">后台雇员</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-9">
+                            <button type="submit" class="btn btn-success  ">鉴定</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="alert alert-success" role="alert">机器鉴定</div>
+                <form class="form-horizontal" action="distinguish" method="post" data-bind="submit:$root.UI_distinguish_submit">
+                    <div style="display: none;">
+                        <input type="text" name="userID" data-bind="value:$root.user().id">
+                        <input type="text" name="itemID" data-bind="value:$root.item().id">
+                        <input type="text" name="type" data-bind="value:0">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label color-theme"><input type="radio" name="level" value="2" checked>高级鉴定</label>
+
+                        <div class="col-sm-9">
+                            <label class="  control-label">碳十四+荧光能谱鉴定</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label color-theme"><input type="radio" name="level" value="1" checked>中级鉴定</label>
+
+                        <div class="col-sm-9">
+                            <label class="  control-label">碳十四鉴定</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label color-theme"><input type="radio" name="level" value="0" checked>初级鉴定</label>
+
+                        <div class="col-sm-9">
+                            <label class="  control-label">荧光能谱鉴定</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-9">
+                            <button type="submit" class="btn btn-success  ">鉴定</button>
+                        </div>
+                    </div>
+
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exchangeModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title text-success" id="myModalLabel">交换</h4>
+            </div>
+            <div class="modal-body" data-bind="if:$root.user()!=null">
+                <div data-bind="ifnot:canExchange">
+                    <span class="text-danger" style="font-size: large">您不能交换该物品：</span>
+                    <span data-bind="if:isItemInExchange">该物品正在交换中！</span> <span
+                        data-bind="ifnot:isItemLevel">您没有权限交换该物品!</span>
+                    <span data-bind="if:isItemSelf">您不能交换自己的物品!</span>
+
+                    <p class="text-success" style="margin-top: 10px;">
+                        您可在<a href="/search" class="text-danger">'搜索页面'</a>搜索您当前'可交换'的物品.
+                    </p>
+                </div>
+                <div class="panel panel-default" data-bind="if:canExchange">
+                    <div class="panel-heading block-red">可交换的物品:</div>
+                    <div class="panel-body">
+                        <table class="table table-hover thumbnail-horizontal-list bootstrapTable" data-height="540" data-sort-name="status" data-search="true">
+                            <thead>
+                            <tr class="success">
+                                <th data-field="state" data-align="left" data-sortable="false">宝贝</th>
+                                <th data-field="dis" data-align="left" data-sortable="false">描述</th>
+                                <th data-field="status" data-align="left" data-sortable="true">状态</th>
+                                <th data-field="price" data-align="left" data-sortable="true" data-sorter="psyco.UI_numberComparator">价格</th>
+                                <th data-field="action" data-align="left" data-sortable="false" data-events="UI_table_doExchange">交换</th>
+                            </tr>
+                            </thead>
+                            <tbody data-bind="foreach:exchangeables">
+                            <tr>
+                                <td><img data-bind="attr:{src:$data.imageUrl}"></td>
+                                <td>
+                                    <a target="_blank" data-bind="text:$data.title,attr:{href:'antique?id='+$data.id}" class="color-theme item-title-horizontal"> </a>
+
+                                    <h5 data-bind="text:$data.user.name"></h5></td>
+                                <td data-bind="text:$root.formatStatus($data.status)" class="color-theme"></td>
+                                <td data-bind="text:$data.price" class="color-theme"></td>
+                                <td>
+                                    <button class="btn btn-success" data-bind="attr:{name:$data.id}">交换</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

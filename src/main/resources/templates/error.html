@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>错误</title>
+    <script type="text/javascript">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../static/lib/bootstrap/css/bootstrap.css"/>
+    <script type="text/javascript" src="../static/lib/bootstrap/js/bootstrap.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../static/lib/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/common.css"/>
+
+</head>
+<body style="background-color: white">
+<div class="container " style="width: 800px; margin-top: 30px">
+    <p align="center" class="text-danger" id="error-text" th:text="${error}"></p>
+</div>
+</body>
+</html>

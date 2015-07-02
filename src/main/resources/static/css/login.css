@@ -1,0 +1,9 @@
+@CHARSET "UTF-8";
+
+.form-bottom-regist{
+	margin-top: 30px;
+}
+.form-bottom-regist a{
+	color: grey;
+	margin: 20px;
+}

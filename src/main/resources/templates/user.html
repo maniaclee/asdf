@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${'个人信息-'+ session.USER.name }"></title>
+
+    <script type="text/javascript" src="../static/lib/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="../static/lib/Underscore-1.7.0.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/lib/bootstrap/css/bootstrap.css"/>
+    <script type="text/javascript" src="../static/lib/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../static/lib/knockout.js"></script>
+
+    <script type="text/javascript" src="../static/lib/bootstrap-table-master/src/bootstrap-table.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/lib/bootstrap-table-master/src/bootstrap-table.css"/>
+
+    <link rel="stylesheet" type="text/css" href="../static/lib/font-awesome/css/font-awesome.min.css"/>
+
+    <script type="text/javascript" src="../static/lib/jQuery-Client-Side-Image-Cropping-Plugin-with-Canvas-CSS3-SimpleCropper/scripts/jquery.Jcrop.js"></script>
+    <script type="text/javascript" src="../static/lib/jQuery-Client-Side-Image-Cropping-Plugin-with-Canvas-CSS3-SimpleCropper/scripts/jquery.SimpleCropper.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/lib/jQuery-Client-Side-Image-Cropping-Plugin-with-Canvas-CSS3-SimpleCropper/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/lib/jQuery-Client-Side-Image-Cropping-Plugin-with-Canvas-CSS3-SimpleCropper/css/jquery.Jcrop.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/lib/bootstrap-fileinput/css/fileinput.min.css"/>
+    <script type="text/javascript" src="../static/lib/bootstrap-fileinput/js/fileinput.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../static/lib/BootstrapDialog/css/bootstrap-dialog.min.css"/>
+    <script type="text/javascript" src="../static/lib/BootstrapDialog/js/bootstrap-dialog.min.js"></script>
+    <script type="text/javascript" src="../static/lib/bootbox.js"></script>
+
+    <script type="text/javascript" src="../static/lib/bootstrap-validator/dist/validator.min.js"></script>
+    <script type="text/javascript" src="../static/lib/moment/min/moment.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../static/css/common.css"/>
+    <script type="text/javascript" src="../static/js/core.js"></script>
+
+    <!--<script type="text/javascript" src="../static/js/user.js"></script>-->
+    <link rel="stylesheet" type="text/css" href="../static/css/user.css"/>
+</head>
+<body>
+<div th:include="components :: nav"></div>
+<div class="container main-content" style="min-height: 800px; margin-top: 20px;">
+    <div class="row">
+        <div class="col-md-2  no-padding">
+            <div class="block-red">
+                <div align="center">
+                    <div class="thumbnail thumbnail-user" data-bind="with:user">
+                        <img data-bind="attr:{src:imageUrl}">
+
+                        <div class="caption">
+                            <p data-bind="text:name"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="my-nav">
+                    <a href="" class="list-group-item   list-group-item-success text-left"> 我的资料</a>
+                        <a th:href="@{/my}" href="#my-profile" class="list-group-item    text-left" th:classappend="${param.op ==null ? 'active':''}"> 个人资料 </a>
+                        <a th:href="@{/my(op='myFavor')}" class="list-group-item  text-left" th:classappend="${param.op !=null and param.op[0]=='myFavor' ? 'active':''}">我的收藏</a>
+                        <a th:href="@{/my(op='myUpload')}" class="list-group-item  text-left" th:classappend="${param.op !=null and param.op[0]=='myUpload' ? 'active':''}">我的上传</a>
+                        <a th:href="@{/my(op='upload')}" class="list-group-item  text-left" th:classappend="${param.op !=null and param.op[0]=='upload' ? 'active':''}">上传物品</a>
+                </div>
+            </div>
+            <div style="margin-top: 20px;">
+                <a th:href="@{/store(id=${store!=null?store.id:''})}" class="list-group-item  list-group-item-success text-left" target="_blank">我的网店</a>
+            </div>
+
+        </div>
+
+        <div class="col-md-10" id="settings-content">
+            <div class="row" id="my-profile" th:unless="${ param.op  }">
+                <div class="panel panel-default">
+                    <div class="panel-heading block-red">个人信息</div>
+                    <div class="panel-body">
+                        <form class="form-horizontal" id="profile-form"
+                              data-bind="with :user" role="form" data-toggle="validator"
+                              action="upload/profile" method="post">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label color-theme ">头像</label>
+
+                                <div class="col-sm-10">
+                                    <div class="cropme" id="cropme-profile-image-upload">
+                                        <img data-bind="attr:{src:imageUrl}"
+                                             id="profile-image-upload"
+                                             style="width: 150px; height: 150px;">
+                                    </div>
+                                </div>
+                            </div>
+                            <input name="id" type="text" hidden="true" data-bind="value:id">
+
+                            <div class="form-group">
+                                <label for="inputEmail3"
+                                       class="col-sm-2 control-label color-theme ">邮箱</label>
+
+                                <div class="col-sm-10">
+                                    <label class=" control-label " data-bind="text:email">邮箱</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3"
+                                       class="col-sm-2 control-label color-theme">用户名</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="name"
+                                           placeholder="昵称/用户名" data-bind="value:name" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3"
+                                       class="col-sm-2 control-label color-theme">会员等级</label>
+
+                                <div class="col-sm-10 ">
+                                    <div class="input-group   ">
+                                        <label class=" control-label color-theme"
+                                               data-bind="text:$root.formatUserLevel(level)"></label> <span
+                                            class="input-group-btn"> <input
+                                            class="btn btn-default" value="升级会员"
+                                            data-bind="click:$root.openUserUpgradeModal">
+											</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3"
+                                       class="col-sm-2 control-label color-theme">手机</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" name="phone" class="form-control"
+                                           placeholder="手机号码" pattern="^1\d{10}$" data-error="手机号码格式错误">
+
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3"
+                                       class="col-sm-2 control-label color-theme">所在地</label>
+
+                                <div class="col-sm-10">
+                                    <!-- 										<component-city-chooser params="select:city"></component-city-chooser> -->
+                                    <component-city-chooser
+                                            params="cities:$root.CITY_ALL,select:city"></component-city-chooser>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail3"
+                                       class="col-sm-2 control-label color-theme">性别</label>
+
+                                <div class="col-sm-10">
+                                    <label class="radio-inline"> <input type="radio"
+                                                                        name="sex" value="0" data-bind="checked: sex"> 男
+                                    </label> <label class="radio-inline"> <input type="radio"
+                                                                                 name="sex" value="1"
+                                                                                 data-bind="checked: sex"> 女
+                                </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-success btn-lg">保存</button>
+                                    <button type="button" class="btn btn-success btn-lg"
+                                            data-bind="click:$root.reset">重置
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row" id="my-collection" th:if="${param.op != null and param.op[0] == 'myFavor'}">
+                <div class="panel panel-default">
+                    <div class="panel-heading block-red">我的收藏</div>
+                    <div class="panel-body">
+                        <table class="table thumbnail-horizontal-list">
+                            <tbody>
+                            <tr th:each="item : ${myFavor}">
+                                <td><img th:attr="src=${item.antique.imageUrl}"></td>
+                                <td>
+                                    <h2 th:text="${item.antique.title}" class="color-theme"></h2>
+
+                                    <p>
+                                        <span class="color-theme">￥</span><span th:text="item.antique.price" class="color-theme"></span>
+                                    </p>
+                                    <h5 th:text="${item.user.name}"></h5>
+                                </td>
+                                <td>
+                                    <p th:text="item.status" class="color-theme"></p>
+                                </td>
+                                <td>
+                                    <p th:text="${@fn.formatDate(item.dataUpload)}" class="color-theme"></p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row" th:if="${param.op != null and param.op[0] == 'myUpload'}">
+                <div class="panel panel-default">
+                    <div class="panel-heading block-red">我的上传</div>
+                    <div class="panel-body">
+                        <table class="table thumbnail-horizontal-list">
+                            <tbody>
+                            <tr th:each="item : ${myUpload}">
+                                <td><img th:attr="src=${item.imageUrl}"></td>
+                                <td>
+                                    <h2 th:text="${item.title}" class="color-theme"></h2>
+
+                                    <p>
+                                        <span class="color-theme">￥</span><span th:text="item.antique.price" class="color-theme"></span>
+                                    </p>
+                                    <h5 th:text="${item.user.name}"></h5>
+                                </td>
+                                <td>
+                                    <p th:text="item.status" class="color-theme"></p>
+                                </td>
+                                <td>
+                                    <p th:text="${@fn.formatDate(item.dateUpload)}" class="color-theme"></p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="my-upload">
+                <div class="panel panel-default" th:if="${param.op !=null and param.op[0] =='upload'}">
+                    <div class="panel-heading block-red">上传物品</div>
+                    <div class="panel-body">
+                        <form class="form-horizontal" action="upload/item" method="post"
+                              enctype="multipart/form-data" id="itemUploadForm"
+                              data-toggle="validator" role="form"
+                              data-bind="with:$root.antiqueEdit,submit:uploadItem">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label color-theme ">标题</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" name="title" class="form-control"
+                                           placeholder="物品标题/名称" data-bind="value:title" required
+                                           data-error="标题不能为空">
+
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label color-theme ">价格</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="price"
+                                           pattern="^\d+(\.\d{1,2})?$" data-error="请输入数字如'100'或'134.35'"
+                                           placeholder="物品价格" data-bind="value:price">
+
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label color-theme">学科</label>
+
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="subject" >
+                                        <option th:each="s : ${application.subject_all}"  th:text="${}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label color-theme">描述信息</label>
+
+                                <div class="col-sm-10">
+										<textarea class="form-control" name="breifInfo" rows="3"
+                                                  data-bind="value:breifInfo"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label color-theme">类别</label>
+
+                                <div class="col-sm-10">
+                                    <component-type-chooser params="types:$root.TYPETAG_ALL"></component-type-chooser>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label color-theme">所在地</label>
+
+                                <div class="col-sm-10">
+                                    <component-city-chooser params="cities:$root.CITY_ALL"></component-city-chooser>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label color-theme ">标题图片</label>
+
+                                <div class="col-sm-10">
+                                    <div class="cropme" style="width: 100px; height: 100px;"
+                                         id="itemImageTitle"></div>
+                                    <input type="text" style="display: none" name="imageUrl">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label color-theme">图片详情</label>
+
+                                <div class="col-sm-10">
+                                    <input id="input-702" name="shit" type="file" multiple=true
+                                           class="file-loading" data-upload-url="/site/file-upload"
+                                           data-max-file-count="10">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <!-- 										<button type="submit" class="btn btn-success btn-lg" data-bind="click:$root.uploadItem">上传</button> -->
+                                    <button type="submit" class="btn btn-success btn-lg">上传</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div th:include="components :: footer"></div>
+
+</body>
+
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <script type="text/javascript" src="../static/lib/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="../static/lib/Underscore-1.7.0.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/lib/bootstrap/css/bootstrap.css"/>
+    <script type="text/javascript" src="../static/lib/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../static/lib/knockout.js"></script>
+
+    <script type="text/javascript" src="../static/lib/bootstrap-table-master/src/bootstrap-table.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/lib/bootstrap-table-master/src/bootstrap-table.css"/>
+
+    <link rel="stylesheet" type="text/css" href="../static/lib/font-awesome/css/font-awesome.min.css"/>
+
+    <script type="text/javascript" src="../static/lib/jQuery-Client-Side-Image-Cropping-Plugin-with-Canvas-CSS3-SimpleCropper/scripts/jquery.Jcrop.js"></script>
+    <script type="text/javascript" src="../static/lib/jQuery-Client-Side-Image-Cropping-Plugin-with-Canvas-CSS3-SimpleCropper/scripts/jquery.SimpleCropper.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/lib/jQuery-Client-Side-Image-Cropping-Plugin-with-Canvas-CSS3-SimpleCropper/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/lib/jQuery-Client-Side-Image-Cropping-Plugin-with-Canvas-CSS3-SimpleCropper/css/jquery.Jcrop.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/lib/bootstrap-fileinput/css/fileinput.min.css"/>
+    <script type="text/javascript" src="../static/lib/bootstrap-fileinput/js/fileinput.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../static/lib/BootstrapDialog/css/bootstrap-dialog.min.css"/>
+    <script type="text/javascript" src="../static/lib/BootstrapDialog/js/bootstrap-dialog.min.js"></script>
+    <script type="text/javascript" src="../static/lib/bootbox.js"></script>
+
+    <script type="text/javascript" src="../static/lib/bootstrap-validator/dist/validator.min.js"></script>
+    <script type="text/javascript" src="../static/lib/moment/min/moment.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../static/css/common.css"/>
+    <script type="text/javascript" src="../static/js/core.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../static/css/user.css"/>
+</head>
+<body>
+<div th:include="components :: nav"></div>
+
+<div style="" align="center">
+    <div style="width:1000px;height:160px;padding:0px; " class="row">
+        <img class="col-md-3" style="width:150px;height:150px;margin: 0px;padding: 0px;" th:attr="src='/static/' +${store.imageUrl}">
+
+        <div class="col-md-6" style="  height:100%;vertical-align: middle;padding-top: 40px;">
+            <h1 class="text-success" th:text="${store.title}"></h1>
+
+            <p class="text-info" th:text="${store.description}"></p>
+        </div>
+        <div class="col-md-3" style="height:100%;vertical-align: middle">
+        </div>
+    </div>
+</div>
+<div class="row" >
+    <div class="navbar-primary "  >
+        <div class="  navbar-sm col-sm-12"  >
+            <div class="navbar navbar-default "  style="padding-left: 300px;">
+                <!--change nav to div , thmeleaf only alow single nav in the page ! fuck-->
+                    <div class="navbar-header"><a class="navbar-brand" href="/index">首页</a></div>
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li><a href="/search" target="_blank">专利 <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li><a href="/news" target="_blank">技术</a></li>
+                            <li><a href="/businessKnowledge" target="_blank">产品</a></li>
+                            <li><a href="/businessKnowledge" target="_blank">论文</a></li>
+                        </ul>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container main-content" style="min-height: 800px; margin-top: 20px;width: 1000px;">
+
+    <div class="row" th:each="type:${application.types}">
+
+        <div class="panel panel-default">
+            <div class="panel-heading block-red" th:text="${type.name}"></div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="item col-md-3" th:each="data : ${#httpServletRequest.getAttribute(type.id)}">
+                        <div class="thumbnail thumbnail-item-md">
+                            <img th:attr="src=${data.imageUrl}">
+
+                            <div class="caption">
+                                <p class="text-left">
+                                    <span>参考价</span><span class="text-danger">￥</span><span class="text-danger" style="font-size:x-large" th:text="${data.price}"></span>
+							<span class="text-right text-success">
+								<span th:text="${data.age}==null ? '不详':${data.age.name}">参考价</span>
+							</span>
+                                </p>
+
+                                <p class="text-left">
+                                    <a target="_blank" th:text="${data.title}" th:attr="href='antique?id='+${data.id}">
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div th:include="components :: footer"></div>
+
+</body>
+
+</html>

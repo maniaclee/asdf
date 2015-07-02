@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=10" /> -->
+
+    <title>shit</title>
+    <script type="text/javascript" src="../static/lib/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="../static/lib/Underscore-1.7.0.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/lib/bootstrap/css/bootstrap.css"/>
+    <script type="text/javascript" src="../static/lib/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../static/lib/knockout.js"></script>
+
+    <script type="text/javascript" src="../static/lib/bootstrap-table-master/src/bootstrap-table.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/lib/bootstrap-table-master/src/bootstrap-table.css"/>
+
+    <link rel="stylesheet" type="text/css" href="../static/lib/font-awesome/css/font-awesome.min.css"/>
+
+    <!-- <link rel="stylesheet" type="text/css" href="../static/lib/Metro-UI-CSS-master/css/metro-bootstrap.css" /> -->
+    <!-- <script type="text/javascript" src="../static/lib/Metro-UI-CSS-master/min/metro.min.js"></script> -->
+    <script type="text/javascript" src="../static/lib/css3-mediaqueries-js-master/css3-mediaqueries.js"></script>
+
+    <script type="text/javascript" src="../static/lib/moment/min/moment.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/css/common.css"/>
+    <!-- <link rel="stylesheet" type="text/css" href="../static/css/common-pink.css" /> -->
+    <link rel="stylesheet" type="text/css" href="../static/css/index.css"/>
+    <script type="text/javascript" src="../static/js/core.js"></script>
+    <script type="text/javascript" src="../static/js/index.js" charset="gb2312"></script>
+</head>
+<body>
+<!--<p  th:text="${application.subjects}"></p>-->
+
+<div th:include="components :: nav"></div>
+
+<!--<div id="carousel-hot-itemsXX" class="carousel slide" data-ride="carousel" style="margin: 0; padding: 0px;">
+    &lt;!&ndash; Indicators &ndash;&gt;
+    <ol class="carousel-indicators">
+        <li data-target="#carousel-hot-itemsXX" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-hot-itemsXX" data-slide-to="1"></li>
+    </ol>
+
+    <div class="carousel-inner" role="listbox">
+        <a class="item active" href=""> <img src="/data-upload/project-pic/wid01.jpg" alt="...">
+
+            <div class="carousel-caption"></div>
+        </a>
+
+        <div class="item">
+            <img src="/data-upload/project-pic/wid02.jpg" alt="...">
+
+            <div class="carousel-caption">...</div>
+        </div>
+    </div>
+</div>-->
+<div class="container main-content" align="center">
+
+    <div th:include="components :: search ('','_blank')"></div>
+
+    <div th:include="components :: nav_middle "></div>
+
+    <div class="row " id="center-area">
+        <div class="col-sm-3 col-md-3 col-lg-3  no-padding border-block">
+            <div class="row vertical-menu-multi-level-header background-theme ">
+                <h4 class="col-sm-12">所有分类</h4>
+            </div>
+            <ul class="nav nav-pills nav-stacked   vertical-menu-multi-level text-font-regular">
+                <li class="dropdown dropdownTopHover" th:each="en : ${application.subjects_group}">
+                    <a href="#"><span th:text="${en.key.name}"></span><span class="caret-right "></span></a>
+                    <ul class="dropdown-menu" style="">
+                        <div style="width:800px;padding: 10px;">
+                            <div th:each="type : ${en.value}">
+                                <p  style="text-align: center"><a class=" text-danger " th:text="${type.name}"></a></p>
+
+                                <div class="row" >
+                                    <span class="col-lg-4" th:each="child : ${type.children}"><a th:text="${child.name}"></a> </span>
+                                </div>
+                            </div>
+                        </div>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-md-9 col-lg-9">
+            <div class="row">
+                <div class="col-sm-8  " style="padding: 0px">
+                    <div id="carousel-hot-items" class="carousel slide" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            <li data-target="#carousel-hot-items" data-slide-to="0" class="active"></li>
+                            <li data-target="#carousel-hot-items" data-slide-to="1"></li>
+                            <li data-target="#carousel-hot-items" data-slide-to="2"></li>
+                        </ol>
+
+                        <div class="carousel-inner" role="listbox">
+                            <a class="item active" href=""> <img src="../static/img/20130114015150121.jpg" alt="...">
+
+                                <div class="carousel-caption">...</div>
+                            </a> <a class="item " href=""> <img src="../static/img/ad.jpg" alt="...">
+
+                            <div class="carousel-caption">...</div>
+                        </a>
+
+                            <div class="item">
+                                <img src="../static/img/20130114015150995.jpg" alt="...">
+
+                                <div class="carousel-caption">...</div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="carousel slide  col-sm-12  " data-ride="carousel" data-type="multi" data-interval="3000" id="carousel-items-recommand">
+                        <div class="carousel-inner" data-bind="foreach:itemsHot">
+                            <div class="item" data-bind="attr: { class:$index() == 0 ?'item active':' item'}">
+                                <div class="col-sm-3  col-sm-3 ">
+                                    <div class="thumbnail thumbnail-item-sm">
+                                        <img alt="..." data-bind="attr: { src: $data.imageUrl}"> <a href="#"></a>
+
+                                        <div class="caption">
+                                            <a target="_blank" data-bind="text:$data.title,attr:{href:'antique?id='+$data.id}"> </a>
+
+                                            <p>
+                                                <span>参考价</span><span>￥</span><span data-bind="text:$data.price"></span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="left carousel-control" href="#carousel-items-recommand" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                        <a
+                                class="right carousel-control" href="#carousel-items-recommand" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-sm-4 no-padding" id="news-area">
+                    <div class="panel panel-default ">
+                        <div class="panel-heading" style="height: 40px;">
+                            <span style="float: left;">公告栏</span> <a style="float: right;">更多&gt&gt</a>
+                        </div>
+                        <div class="panel-body">
+                            <table>
+                                <tbody data-bind="foreach:news">
+                                <tr>
+                                    <td align="left">
+                                        <a target="_blank" data-bind="text:$data.title,attr:{href:$data.url}"></a></td>
+                                    <td width="60" data-bind="text:$root.formatDate($data.create)"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="height: 40px;">
+                            <span style="float: left;">热门文章</span> <a style="float: right;">更多&gt&gt</a>
+                        </div>
+                        <div class="panel-body">
+                            <table>
+                                <tbody data-bind="foreach:articles">
+                                <tr>
+                                    <td align="left">
+                                        <a target="_blank" data-bind="text:$data.title,attr:{href:$data.url}"></a></td>
+                                    <td width="60" data-bind="text:$root.formatDate($data.create)"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+
+    <div class="row" id="area-recommand">
+        <div class="col-sm-2 block-red no-padding">
+            <br/>
+            <h4 class="text-with-bottom-border">最新上架</h4>
+        </div>
+        <div class="col-sm-8 no-padding border-block block-white" style="padding: 35px 5px;">
+            <div class="row" data-bind="foreach:itemsRecommand">
+                <div class="item col-sm-3">
+                    <div class="thumbnail thumbnail-item-sm">
+                        <img alt="..." data-bind="attr: { src: $data.imageUrl}">
+
+                        <div class="caption">
+                            <a target="_blank" data-bind="text:$data.title,attr:{href:'antique?id='+$data.id}"> </a>
+
+                            <p>
+                                <span>参考价</span><span>￥</span><span data-bind="text:$data.price"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2 block-white border-block ">
+            <p class="alert alert-success">本站推荐</p>
+
+            <div data-bind="foreach:itemsHot">
+                <div class="item" data-bind="if:$index() <= 1">
+                    <div class="thumbnail thumbnail-item-sm">
+                        <img alt="..." data-bind="attr: { src:$data.imageUrl}">
+
+                        <div class="caption">
+                            <a target="_blank" data-bind="text:$data.title,attr:{href:'antique?id='+$data.id}"> </a>
+
+                            <p>
+                                <span>参考价</span><span>￥</span><span data-bind="text: $data.price"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:include="components :: footer"></div>
+</body>
+
+</html>
