@@ -58,12 +58,12 @@
 
     <div th:include="components :: nav_middle "></div>
 
-    <div class="row " id="center-area">
-        <div class="col-sm-3 col-md-3 col-lg-3  no-padding border-block">
+    <div class="row " id="center-area" style="">
+        <div class="col-sm-3 col-md-3 col-lg-3  no-padding border-block"  style="height:100%;">
             <div class="row vertical-menu-multi-level-header background-theme ">
                 <h4 class="col-sm-12">所有分类</h4>
             </div>
-            <ul class="nav nav-pills nav-stacked   vertical-menu-multi-level text-font-regular">
+            <ul class="nav nav-pills nav-stacked   vertical-menu-multi-level text-font-regular" >
                 <li class="dropdown dropdownTopHover" th:each="en : ${application.subjects_group}">
                     <a href="#"><span th:text="${en.key.name}"></span><span class="caret-right "></span></a>
                     <ul class="dropdown-menu" style="">
@@ -82,7 +82,7 @@
         </div>
         <div class="col-sm-9 col-md-9 col-lg-9">
             <div class="row">
-                <div class="col-sm-8  " style="padding: 0px">
+                <div class="col-sm-12  " style="padding: 0px">
                     <div id="carousel-hot-items" class="carousel slide" data-ride="carousel">
                         <!-- Indicators -->
                         <ol class="carousel-indicators">
@@ -117,8 +117,7 @@
                                         <img alt="..." data-bind="attr: { src: $data.imageUrl}"> <a href="#"></a>
 
                                         <div class="caption">
-                                            <a target="_blank" data-bind="text:$data.title,attr:{href:'antique?id='+$data.id}"> </a>
-
+                                            <a target="_blank" data-bind="text:$data.title,attr:{href:'item?id='+$data.id}"> </a>
                                             <p>
                                                 <span>参考价</span><span>￥</span><span data-bind="text:$data.price"></span>
                                             </p>
@@ -132,40 +131,40 @@
                                 class="right carousel-control" href="#carousel-items-recommand" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
                     </div>
                 </div>
-                <div class="col-sm-4 no-padding" id="news-area">
-                    <div class="panel panel-default ">
-                        <div class="panel-heading" style="height: 40px;">
-                            <span style="float: left;">公告栏</span> <a style="float: right;">更多&gt&gt</a>
-                        </div>
-                        <div class="panel-body">
-                            <table>
-                                <tbody data-bind="foreach:news">
-                                <tr>
-                                    <td align="left">
-                                        <a target="_blank" data-bind="text:$data.title,attr:{href:$data.url}"></a></td>
-                                    <td width="60" data-bind="text:$root.formatDate($data.create)"></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading" style="height: 40px;">
-                            <span style="float: left;">热门文章</span> <a style="float: right;">更多&gt&gt</a>
-                        </div>
-                        <div class="panel-body">
-                            <table>
-                                <tbody data-bind="foreach:articles">
-                                <tr>
-                                    <td align="left">
-                                        <a target="_blank" data-bind="text:$data.title,attr:{href:$data.url}"></a></td>
-                                    <td width="60" data-bind="text:$root.formatDate($data.create)"></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                <!--<div class="col-sm-4 no-padding" id="news-area">-->
+                    <!--<div class="panel panel-default ">-->
+                        <!--<div class="panel-heading" style="height: 40px;">-->
+                            <!--<span style="float: left;">公告栏</span> <a style="float: right;">更多&gt&gt</a>-->
+                        <!--</div>-->
+                        <!--<div class="panel-body">-->
+                            <!--<table>-->
+                                <!--<tbody data-bind="foreach:news">-->
+                                <!--<tr>-->
+                                    <!--<td align="left">-->
+                                        <!--<a target="_blank" data-bind="text:$data.title,attr:{href:$data.url}"></a></td>-->
+                                    <!--<td width="60" data-bind="text:$root.formatDate($data.create)"></td>-->
+                                <!--</tr>-->
+                                <!--</tbody>-->
+                            <!--</table>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="panel panel-default">-->
+                        <!--<div class="panel-heading" style="height: 40px;">-->
+                            <!--<span style="float: left;">热门文章</span> <a style="float: right;">更多&gt&gt</a>-->
+                        <!--</div>-->
+                        <!--<div class="panel-body">-->
+                            <!--<table>-->
+                                <!--<tbody data-bind="foreach:articles">-->
+                                <!--<tr>-->
+                                    <!--<td align="left">-->
+                                        <!--<a target="_blank" data-bind="text:$data.title,attr:{href:$data.url}"></a></td>-->
+                                    <!--<td width="60" data-bind="text:$root.formatDate($data.create)"></td>-->
+                                <!--</tr>-->
+                                <!--</tbody>-->
+                            <!--</table>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
             </div>
         </div>
     </div>
@@ -183,7 +182,7 @@
                         <img alt="..." data-bind="attr: { src: $data.imageUrl}">
 
                         <div class="caption">
-                            <a target="_blank" data-bind="text:$data.title,attr:{href:'antique?id='+$data.id}"> </a>
+                            <a target="_blank" data-bind="text:$data.title,attr:{href:'item?id='+$data.id}"> </a>
 
                             <p>
                                 <span>参考价</span><span>￥</span><span data-bind="text:$data.price"></span>
@@ -202,7 +201,7 @@
                         <img alt="..." data-bind="attr: { src:$data.imageUrl}">
 
                         <div class="caption">
-                            <a target="_blank" data-bind="text:$data.title,attr:{href:'antique?id='+$data.id}"> </a>
+                            <a target="_blank" data-bind="text:$data.title,attr:{href:'item?id='+$data.id}"> </a>
 
                             <p>
                                 <span>参考价</span><span>￥</span><span data-bind="text: $data.price"></span>

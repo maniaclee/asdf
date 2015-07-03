@@ -52,7 +52,6 @@
                 </div>
 
                 <div id="my-nav">
-                    <a href="" class="list-group-item   list-group-item-success text-left"> 我的资料</a>
                         <a th:href="@{/my}" href="#my-profile" class="list-group-item    text-left" th:classappend="${param.op ==null ? 'active':''}"> 个人资料 </a>
                         <a th:href="@{/my(op='myFavor')}" class="list-group-item  text-left" th:classappend="${param.op !=null and param.op[0]=='myFavor' ? 'active':''}">我的收藏</a>
                         <a th:href="@{/my(op='myUpload')}" class="list-group-item  text-left" th:classappend="${param.op !=null and param.op[0]=='myUpload' ? 'active':''}">我的上传</a>
@@ -254,12 +253,17 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-sm-2 control-label color-theme">类别</label>
+
+                                <div class="col-sm-10">
+                                    <div th:include="components :: typeChooser"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label color-theme">学科</label>
 
                                 <div class="col-sm-10">
-                                    <select class="form-control" name="subject" >
-                                        <option th:each="s : ${application.subject_all}"  th:text="${}"></option>
-                                    </select>
+                                    <div th:include="components :: subjectChooser"></div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -271,13 +275,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label color-theme">类别</label>
 
-                                <div class="col-sm-10">
-                                    <component-type-chooser params="types:$root.TYPETAG_ALL"></component-type-chooser>
-                                </div>
-                            </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label color-theme">所在地</label>
 

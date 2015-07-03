@@ -34,10 +34,12 @@
     <component-logo-search></component-logo-search>
     <div class="row block-white no-padding  " id="item-briefInfo">
         <div class="col-sm-3  no-padding" align="center">
-            <div class="thumbnail no-border" style="padding-top: 30px">
+            <div class="thumbnail no-border no-padding" style="margin: 0px;">
                 <img th:attr="src=${item.imageUrl}">
 
                 <div class="caption">
+                    <button class="btn btn-sm btn-success">收藏</button>
+                    <button class="btn btn-sm btn-success">收藏</button>
                 </div>
             </div>
         </div>
@@ -89,21 +91,19 @@
         </div>
         <div class="col-sm-3  no-padding" align="center" id="owner-panel" style="font-size: small">
             <hr>
-            <h3 th:text="${store==null?'未知店家':store.name}" class="color-theme "></h3>
+            <h3 th:text="${store==null?'未知店家':store.title}" class="color-theme "></h3>
             <hr>
             <div class="row" align="left" style="">
                 <span class="col-sm-4">掌柜:</span> <span class="col-sm-8" th:text="${item.user.name}"></span>
                 <span class="col-sm-4">地区:</span>
                 <span class="col-sm-8" th:text="${@fn.formatCity(item.user.city)}"></span>
                 <span class="col-sm-4">联系:</span> <span class="col-sm-8">保密</span>
-            </div>
-            <div class="row" align="left">
-                <!-- 					<span class="col-sm-4">邮箱:</span> <span class="col-sm-8" data-bind="text:email"></span> -->
 
-            </div>
-            <div class="row">
-                <div class="col-lg-6"><a class="btn btn-primary" href=""> 进入店铺</a></div>
-                <div class="col-lg-6"><a class="btn btn-primary" href=""> 收藏店铺</a></div>
+                <div style="margin-top:120px;">
+                    <div class="col-sm-4">
+                        <a class="btn btn-sm btn-default" th:attr="href=${store!=null?'/store?id='+store.id:''}"  target="_blank"> 进入店铺</a></div>
+                    <div class="col-sm-8"><a class="btn btn-sm btn-default" href=""> 收藏店铺</a></div>
+                </div>
             </div>
         </div>
     </div>
@@ -111,12 +111,11 @@
 
     <div class="row block-white" style="min-height: 500px; padding: 2px 5px;" data-bind="with:item">
         <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#tab1detail">藏品详情</a></li>
-            <li><a data-toggle="tab" href="#tab2proccess">交换流程</a></li>
+            <li class="active"><a data-toggle="tab" href="#tab1detail">物品详情</a></li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane fade in active" id="tab1detail">
-                <h3 class="color-theme">藏品信息：</h3>
+                <h3 class="color-theme">物品信息：</h3>
 
                 <p th:text="${item.breifInfo}"></p>
 

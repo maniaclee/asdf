@@ -6,9 +6,9 @@ body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
 }
 
 .main-content {
-    width: 1200px;
+    width: 1100px;
     min-height: 1000px;
-    margin-top: 0px;
+    margin-top: 10px;
 }
 
 body {
@@ -283,6 +283,15 @@ body {
 
 .thumbnail-item-sm p > span:last-child {
     color: orange;
+}
+
+.thumbnail-item-lg:hover  ,.thumbnail-item-sm:hover ,.thumbnail-item-md:hover {
+    outline: 2px solid #a28c70;
+    overflow: hidden;
+    border-radius: 0px;
+}
+.thumbnail-item-lg:hover .caption ,.thumbnail-item-sm:hover .caption,.thumbnail-item-md:hover .caption{
+    /*background-color: #a28c70;*/
 }
 
 .carousel-control {

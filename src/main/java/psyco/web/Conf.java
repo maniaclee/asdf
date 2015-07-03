@@ -12,7 +12,7 @@ import java.net.MalformedURLException;
 public class Conf {
 //	 public static File DIR_Base = new File("D:\\project-data\\data-upload");
 //	 public static File DIR_Base = new File("H:\\project-data\\data-upload");
-	public static File DIR_Base = new File("/Users/psyco/psyco/project/project-data/data-upload/");
+	public static File DIR_Base = new File("/Users/psyco/psyco/project-pro/project-data/data-upload/");
 	public static File DIR_ItemImage = new File(DIR_Base, "itemImage");
 	public static File DIR_UserPhoto = new File(DIR_Base, "userPhoto");
 	public static File DIR_File = new File(DIR_Base, "file");

@@ -1,6 +1,7 @@
 package psyco.test;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
 import org.apache.commons.io.IOUtils;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -109,13 +110,20 @@ public class DBTest {
     }
 
     @Test
-    public void skdjfklsjdflksdf(){
-        System.out.println(antiqR.findOne(2051L));;
+    public void skdjfklsjdflksdf() {
+      File[] fs =   new File("/Users/psyco/psyco/project-pro/project-data/data-upload/project-pic").listFiles(e -> !e.getName().startsWith("."));
+//       List<String> re =  Lists.newArrayList("量子物理的一种新方法[学术论文]","高分子材料的实验分析","胚胎的新型培育方法【技术转让】","机床的打磨与制造工艺","汽车材料加工与装配","Gossip网络的动态配置","一种基于mesh的拓扑结构","服装打板与设计");
+        antiqR.findAll().forEach(e -> {
+            e.setDetailPicUrls(CommonUtil.toJSON(Lists.newArrayList("data-upload/project-pic/"+fs[(int)(Math.random()* fs.length)].getName())));
+            antiqR.save(e);
+        });
     }
-    public void store3(){
+
+    public void store3() {
         Store s = storeR.findAll().get(0);
-        print(antiqR.findByUserAndType(s.getUser().getId(),1));
+        print(antiqR.findByUserAndType(s.getUser().getId(), 1));
     }
+
     public void store2() {
         List<TypeTag> ts = typeR.findAll();
         antiqR.findAll().forEach(a -> {

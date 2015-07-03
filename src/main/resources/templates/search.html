@@ -80,24 +80,24 @@
 
     </div>
     <div class="row">
-        <table class="table thumbnail-horizontal-list">
+        <table class="table thumbnail-horizontal-list table-hover ">
             <tbody>
-            <tr th:each="data : ${result.content}">
+            <tr th:each="data : ${result.content}" class="">
                 <td><img th:attr="src=${data.imageUrl}"></td>
                 <td>
-                    <a th:text="${data.title}" th:attr="href='item?id='+${data.id}" class="color-theme" ></a>
+                    <a th:text="${data.title}" th:attr="href='item?id='+${data.id}" target="_blank" class="color-theme" ></a>
 
                     <p>
                         <span class="color-theme">￥</span><span
                             th:text="${data.price}" class="color-theme"></span>
                     </p>
 
-                    <p th:text="${data.age}==null ? '不详':${data.age.name}"></p>
+                    <p th:text="${data.type}==null ? '不详':${data.type.name}"></p>
                 </td>
                 <td style="vertical-align: middle">
                     <p th:text="${data.user.name}" class="color-theme"></p>
                 </td>
-                <td style="vertical-align: middle">
+                <td style="vertical-align: middle" class="text-right">
                     <p th:text="${@fn.formatDate(data.dateUpload)}" class="color-theme"></p>
                 </td>
             </tr>
@@ -112,7 +112,7 @@
                         <p class="text-left">
                             <span>参考价</span><span class="text-danger">￥</span><span class="text-danger" style="font-size:x-large" th:text="${data.price}"></span>
 							<span class="text-right text-success">
-								<span th:text="${data.age}==null ? '不详':${data.age.name}">参考价</span>
+								<span th:text="${data.type}==null ? '不详':${data.type.name}">参考价</span>
 							</span>
                         </p>
 

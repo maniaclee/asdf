@@ -8,6 +8,15 @@
 <div th:fragment="logo">
     <a href="/index"><img src="../static/img/logo.png" style="width: 300px; height: 130px"/></a>
 </div>
+
+<div th:fragment="typeChooser">
+    <div class="dropdown " id="type-chooser-element">
+        <select class="form-control">
+            <option th:each="type :${application.types}"><span th:text="${type.name}"></span></option>
+        </select>
+        <input type="text" style="display: none" name="type">
+    </div>
+</div>
 <div th:fragment="subjectChooser">
     <div class="dropdown " id="type-chooser-element">
         <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true" style="min-width: 150px;">
