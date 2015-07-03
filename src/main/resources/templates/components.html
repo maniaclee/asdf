@@ -17,6 +17,30 @@
         <input type="text" style="display: none" name="type">
     </div>
 </div>
+<div th:fragment="uploadFile">
+    <input id="input-702" name="shit" type="file" multiple=true
+           class="file-loading" data-upload-url="/site/file-upload"
+           data-max-file-count="10">
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            $('#input-702').fileinput({
+                // uploadUrl : 'uploadUrl',
+                dropZoneTitle: '预览图片',
+                allowedFileTypes: ['image'],
+                dropZoneEnabled: false,
+                previewFileType: "image",
+                maxFileCount: 10,
+                overwriteInitial: false,
+                browseClass: "btn btn-success ",
+                showCaption: false,
+                showRemove: false,
+                showPreview: true,
+                browseLabel: "选择文件",
+                showUpload: false,
+            });
+        });
+    </script>
+</div>
 <div th:fragment="subjectChooser">
     <div class="dropdown " id="type-chooser-element">
         <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true" style="min-width: 150px;">

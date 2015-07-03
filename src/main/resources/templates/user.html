@@ -43,10 +43,10 @@
             <div class="block-red">
                 <div align="center">
                     <div class="thumbnail thumbnail-user" data-bind="with:user">
-                        <img data-bind="attr:{src:imageUrl}">
+                        <img  th:attr="src='static/'+${session.USER.imageUrl}" >
 
                         <div class="caption">
-                            <p data-bind="text:name"></p>
+                            <p th:text="${session.USER.name}"></p>
                         </div>
                     </div>
                 </div>
@@ -203,10 +203,10 @@
                             <tr th:each="item : ${myUpload}">
                                 <td><img th:attr="src=${item.imageUrl}"></td>
                                 <td>
-                                    <h2 th:text="${item.title}" class="color-theme"></h2>
+                                    <h3  th:text="${item.title}" class="color-theme" style="margin-top: 0px;"></h3>
 
                                     <p>
-                                        <span class="color-theme">￥</span><span th:text="item.antique.price" class="color-theme"></span>
+                                        <span class="color-theme">￥</span><span th:text="${item.price}" class="color-theme"></span>
                                     </p>
                                     <h5 th:text="${item.user.name}"></h5>
                                 </td>
@@ -276,13 +276,13 @@
                             </div>
 
 
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label color-theme">所在地</label>
+                            <!--<div class="form-group">-->
+                                <!--<label class="col-sm-2 control-label color-theme">所在地</label>-->
 
-                                <div class="col-sm-10">
-                                    <component-city-chooser params="cities:$root.CITY_ALL"></component-city-chooser>
-                                </div>
-                            </div>
+                                <!--<div class="col-sm-10">-->
+                                    <!--<component-city-chooser params="cities:$root.CITY_ALL"></component-city-chooser>-->
+                                <!--</div>-->
+                            <!--</div>-->
                             <div class="form-group">
                                 <label class="col-sm-2 control-label color-theme ">标题图片</label>
 
@@ -293,12 +293,10 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label color-theme">图片详情</label>
+                                <label class="col-sm-2 control-label color-theme">上传文件</label>
 
                                 <div class="col-sm-10">
-                                    <input id="input-702" name="shit" type="file" multiple=true
-                                           class="file-loading" data-upload-url="/site/file-upload"
-                                           data-max-file-count="10">
+                                   <div th:include="components :: uploadFile"></div>
                                 </div>
                             </div>
                             <div class="form-group">
