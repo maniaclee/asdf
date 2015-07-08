@@ -21,9 +21,9 @@ public class TestDSsdfa {
             System.out.printf("sdfsdfsdfdsd");
             e.printStackTrace();
         }
-        catch (Error e){
-            System.out.println("fuck");
-        }
+//        catch (Error e){
+//            System.out.println("fuck");
+//        }
 
     }
 }

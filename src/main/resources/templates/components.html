@@ -6,7 +6,7 @@
 <body>
 
 <div th:fragment="logo">
-    <a href="/index"><img src="../static/img/logo.png" style="width: 300px; height: 130px"/></a>
+    <a href="/index"><img src="../static/img/logo.png" style="width: 230px; height: 60px"/></a>
 </div>
 
 <div th:fragment="typeChooser">
@@ -70,14 +70,23 @@
     </script>
 </div>
 <div th:fragment="search(key,target)">
-    <div class="row" style="margin-top: 5px;" id="logo-area">
-        <div class="col-sm-3 no-padding" align="center">
+    <div class="row" style="margin-top: 5px;height:80px;" id="logo-area">
+        <div class="col-sm-3 no-padding" align="left">
             <div th:include="components ::logo"></div>
         </div>
         <div class="col-sm-1"></div>
         <div class="col-sm-8 no-padding ">
-            <form role="search" action="search" method="get" th:attr="target=${target}" style="margin-top: 40px;">
+            <form role="search" action="search" method="get" th:attr="target=${target}" style="margin-top: 10px;">
                 <div class="input-group  search-component">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">全部产品 <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">专利</a></li>
+                            <li><a href="#">产品</a></li>
+                            <li><a href="#">技术</a></li>
+                            <li><a href="#">技能</a></li>
+                        </ul>
+                    </div>
                     <input type="text" name="key" class="form-control" placeholder="请输入关键字" th:value="${key}">
                     <span class="input-group-btn" style="border: none"> <input class="btn btn-default" type="submit" value="搜索"></span>
                 </div>
