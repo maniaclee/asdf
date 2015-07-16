@@ -72,7 +72,9 @@ public class PageController {
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public ModelAndView index(Model model, HttpServletRequest request) {
-        return new ModelAndView("index");
+        ModelAndView re =  new ModelAndView("index");
+        Antique a =new Antique();
+        return re;
     }
 
     @RequestMapping(value = "/aboutUs", method = RequestMethod.GET)
