@@ -69,6 +69,30 @@
         });
     </script>
 </div>
+
+<div th:fragment="productChooser">
+    <div id="product-chooser">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>全部</span>
+            <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li><a href="#">全部</a></li>
+            <li><a href="#">专利</a></li>
+            <li><a href="#">产品</a></li>
+            <li><a href="#">技术</a></li>
+            <li><a href="#">技能</a></li>
+        </ul>
+        <input type="text" style="display: none" name="">
+    </div>
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            var el = $('#product-chooser');
+            el.find('li a').click(function () {
+                el.find('button span').first().text($(this).text());
+                el.find('input').val($(this).attr('data-id'));
+            });
+        });
+    </script>
+</div>
 <div th:fragment="search(key,target)">
     <div class="row" style="margin-top: 5px;height:80px;" id="logo-area">
         <div class="col-sm-3 no-padding" align="left">
@@ -78,14 +102,18 @@
         <div class="col-sm-8 no-padding ">
             <form role="search" action="search" method="get" th:attr="target=${target}" style="margin-top: 10px;">
                 <div class="input-group  search-component">
+                    <!--<div class="input-group-btn">-->
+                    <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">全部产品-->
+                    <!--<span class="caret"></span></button>-->
+                    <!--<ul class="dropdown-menu">-->
+                    <!--<li><a href="#">专利</a></li>-->
+                    <!--<li><a href="#">产品</a></li>-->
+                    <!--<li><a href="#">技术</a></li>-->
+                    <!--<li><a href="#">技能</a></li>-->
+                    <!--</ul>-->
+                    <!--</div>-->
                     <div class="input-group-btn">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">全部产品 <span class="caret"></span></button>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">专利</a></li>
-                            <li><a href="#">产品</a></li>
-                            <li><a href="#">技术</a></li>
-                            <li><a href="#">技能</a></li>
-                        </ul>
+                        <div th:include="components ::productChooser"></div>
                     </div>
                     <input type="text" name="key" class="form-control" placeholder="请输入关键字" th:value="${key}">
                     <span class="input-group-btn" style="border: none"> <input class="btn btn-default" type="submit" value="搜索"></span>
@@ -143,6 +171,10 @@
                                 <li><a href="/news" target="_blank">技术</a></li>
                                 <li><a href="/businessKnowledge" target="_blank">产品</a></li>
                                 <li><a href="/businessKnowledge" target="_blank">技能</a></li>
+                                <li><a href="/businessKnowledge" target="_blank">创新创业服务</a></li>
+                                <li><a href="/businessKnowledge" target="_blank">产学研服务</a></li>
+                                <li><a href="/businessKnowledge" target="_blank">人力资源服务</a></li>
+                                <li><a href="/businessKnowledge" target="_blank">投资融资服务</a></li>
                                 <li><a href="/aboutUs" target="_blank">关于我们</a></li>
                                 <li><a href="/contactUs" target="_blank">联系我们</a></li>
                             </ul>

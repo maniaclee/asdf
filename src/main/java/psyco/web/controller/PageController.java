@@ -1,6 +1,7 @@
 package psyco.web.controller;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -73,7 +74,26 @@ public class PageController {
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public ModelAndView index(Model model, HttpServletRequest request) {
         ModelAndView re =  new ModelAndView("index");
-        Antique a =new Antique();
+        Antique a =testData("发明专利","发明专利的一些简介","http://www.wtoip.com/home/img/bg/sort-adv01.jpg");
+        Antique b =testData("外观设计专利","发明专利的一些简介","http://www.wtoip.com/home/img/bg/sort-adv06.jpg");
+        Antique c =testData("实用型专利","发明专利的一些简介","http://www.wtoip.com/home/img/bg/sort-adv01.jpg");
+        re.addObject("paterns", Lists.newArrayList(a,b,c));
+        Antique e =testData("App制作","App 前段","http://www.wtoip.com/home/img/bg/sort-adv01.jpg");
+        Antique f =testData("网站设计","网站设计的一些简介","http://www.wtoip.com/home/img/bg/sort-adv06.jpg");
+        Antique g =testData("工业设计","工业设计的一些简介","http://www.wtoip.com/home/img/bg/sort-adv01.jpg");
+        Antique h =testData("服装加工","服装加工的一些简介","http://www.wtoip.com/home/img/bg/sort-adv01.jpg");
+        re.addObject("techs", Lists.newArrayList(e,f,g,h));
+        re.addObject("recommands",repAntique.itemsOrderByDateupload(new PageRequest(1, 8)));
+        re.addObject("hots",repAntique.itemsOrderByDateupload(new PageRequest(1, 4)));
+
+        return re;
+    }
+
+    private  Antique testData(String title , String breif , String url){
+        Antique re= new Antique();
+        re.setBreifInfo(breif);
+        re.setImageUrl(url);
+        re.setTitle(title);
         return re;
     }
 

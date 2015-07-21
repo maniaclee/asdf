@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <!-- <meta http-equiv="X-UA-Compatible" content="IE=10" /> -->
 
-    <title>shit</title>
+    <title>29教授网店</title>
     <script type="text/javascript" src="../static/lib/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="../static/lib/Underscore-1.7.0.js"></script>
     <link rel="stylesheet" type="text/css" href="../static/lib/bootstrap/css/bootstrap.css"/>
@@ -112,17 +112,17 @@
                     </div>
                 </div>
                 <div class="carousel slide  row" style="margin-top: 10px;" data-ride="carousel" data-type="multi" data-interval="3000" id="carousel-items-recommand">
-                    <div class="carousel-inner" data-bind="foreach:itemsHot">
-                        <div class="item" data-bind="attr: { class:$index() == 0 ?'item active':' item'}">
-                            <div class="col-sm-3  col-sm-3 ">
+                    <div class="carousel-inner" >
+                        <div class="" th:each="hot: ${recommands}"  th:class="${hotStat.index==0?'item active':'item'}" >
+                            <div class="col-sm-3  col-sm-3 "  >
                                 <div class="thumbnail thumbnail-item-sm">
-                                    <img alt="..." data-bind="attr: { src: $data.imageUrl}"> <a href="#"></a>
-
+                                    <img alt="..." th:src="${hot.imageUrl}"> <a href="#"></a>
                                     <div class="caption">
-                                        <a target="_blank" data-bind="text:$data.title,attr:{href:'item?id='+$data.id}"> </a>
+                                        <!--<a target="_blank" data-bind="text:$data.title,attr:{href:'item?id='+$data.id}"> </a>-->
+                                        <a target="_blank" th:text="${hot.title}"> </a>
 
                                         <p>
-                                            <span>参考价</span><span>￥</span><span data-bind="text:$data.price"></span>
+                                            <span>参考价</span><span>￥</span><span th:text="hot.price"></span>
                                         </p>
                                     </div>
                                 </div>
@@ -149,24 +149,50 @@
         <div class="col-lg-2 block-red" style="height: 100%;"></div>
         <div class="col-lg-10 " style="height: 100%;">
             <div class="row">
-                <div class="col-lg-4 border-right-vertical " style="height: 100%;">
-                    <h3>发明专利</h3>
-                    <h4 style="color: grey">发明专利的一些简介</h4>
-                    <img src="http://www.wtoip.com/home/img/bg/sort-adv01.jpg"/>
+                <div class="col-lg-4 border-right-vertical " style="height: 100%;" th:each="patern:${paterns}">
+                    <h3 th:text="${patern.title}"></h3>
+                    <h4 style="color: grey" th:text="${patern.breifInfo}">发明专利的一些简介</h4>
+                    <img src="http://www.wtoip.com/home/img/bg/sort-adv01.jpg" th:src="${patern.imageUrl}"/>
 
                     <p><a href="">点击查看</a></p>
                 </div>
-                <div class="col-lg-4 border-right-vertical">
-                    <h3>外观设计专利</h3>
-                    <h4 style="color: grey">发明专利的一些简介</h4>
-                    <img src="http://www.wtoip.com/home/img/bg/sort-adv06.jpg"/>
+            </div>
+        </div>
+        <!--<div class="col-lg-2" style="height: 100%;"></div>-->
+    </div>
+    <br>
+    <div class="row" style="font-size: 25px;">
+        <span class="text-left col-lg-3">技术市场</span>
+        <a class="text-right col-lg-9" style="font-size: medium;margin-top:10px;">更多</a>
+    </div>
+    <div class="row border-right-vertical border-bottom border-top" style="height: 300px;background-color: white">
+        <div class="col-lg-2 block-red" style="height: 100%;"></div>
+        <div class="col-lg-10 " style="height: 100%;">
+            <div class="row">
+                <div class="col-lg-4 border-right-vertical " style="height: 100%;" th:each="patern:${paterns}">
+                    <h3 th:text="${patern.title}"></h3>
+                    <h4 style="color: grey" th:text="${patern.breifInfo}"></h4>
+                    <img src="http://www.wtoip.com/home/img/bg/sort-adv01.jpg" th:src="${patern.imageUrl}"/>
 
                     <p><a href="">点击查看</a></p>
                 </div>
-                <div class="col-lg-4">
-                    <h3>使用型专利</h3>
-                    <h4 style="color: grey">发明专利的一些简介</h4>
-                    <img src="http://www.wtoip.com/home/img/bg/sort-adv01.jpg"/>
+            </div>
+        </div>
+        <!--<div class="col-lg-2" style="height: 100%;"></div>-->
+    </div>
+    <br>
+    <div class="row" style="font-size: 25px;">
+        <span class="text-left col-lg-3">产品市场</span>
+        <a class="text-right col-lg-9" style="font-size: medium;margin-top:10px;">更多</a>
+    </div>
+    <div class="row border-right-vertical border-bottom border-top" style="height: 300px;background-color: white">
+        <div class="col-lg-2 block-red" style="height: 100%;"></div>
+        <div class="col-lg-10 " style="height: 100%;">
+            <div class="row">
+                <div class="col-lg-4 border-right-vertical " style="height: 100%;" th:each="patern:${paterns}">
+                    <h3 th:text="${patern.title}"></h3>
+                    <h4 style="color: grey" th:text="${patern.breifInfo}"></h4>
+                    <img src="http://www.wtoip.com/home/img/bg/sort-adv01.jpg" th:src="${patern.imageUrl}"/>
 
                     <p><a href="">点击查看</a></p>
                 </div>
@@ -177,54 +203,21 @@
     <br>
 
     <div class="row" style="font-size: 25px;">
-        <span class="text-left col-lg-3">技术市场</span>
+        <span class="text-left col-lg-3">技能市场</span>
         <a class="text-right col-lg-9" style="font-size: medium;margin-top:10px;">更多</a>
     </div>
     <div class="row border-right-vertical border-bottom border-top" style="height: 300px;background-color: white">
         <div class="col-lg-2 block-red" style="height: 100%;"></div>
         <div class="col-lg-10 " style="height: 100%;">
             <div class="row">
-                <div class="col-lg-3 border-right-vertical " >
-                    <div class="thumbnail clearfix" style="border:none;">
-                        <img class="pull-left" src="http://www.wtoip.com/home/img/bg/sort-adv01.jpg" alt="...">
+                <div class="col-lg-3 border-right-vertical " th:each="tech:${techs}">
+                    <div class="thumbnail clearfix" style="border:none;" >
+                        <img class="pull-left" th:src="${tech.imageUrl}">
 
-                        <div class="caption" style=" ;">
-                            <h3>App制作</h3>
+                        <div class="caption" style=" ">
+                            <h3 th:text="${tech.title}"></h3>
 
-                            <p>App 前段</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 border-right-vertical " >
-                    <div class="thumbnail clearfix" style="border:none;">
-                        <img class="pull-left" src="http://www.wtoip.com/home/img/bg/sort-adv01.jpg" alt="...">
-
-                        <div class="caption" style=" ;">
-                            <h3>App制作</h3>
-
-                            <p>App 前段</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 border-right-vertical " >
-                    <div class="thumbnail clearfix" style="border:none;">
-                        <img class="pull-left" src="http://www.wtoip.com/home/img/bg/sort-adv01.jpg" alt="...">
-
-                        <div class="caption" style=" ;">
-                            <h3>App制作</h3>
-
-                            <p>App 前段</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 border-right-vertical " >
-                    <div class="thumbnail clearfix" style="border:none;">
-                        <img class="pull-left" src="http://www.wtoip.com/home/img/bg/sort-adv01.jpg" alt="...">
-
-                        <div class="caption" style=" ;">
-                            <h3>App制作</h3>
-
-                            <p>App 前段</p>
+                            <p th:text="${tech.breifInfo}">> </p>
                         </div>
                     </div>
                 </div>
@@ -244,16 +237,17 @@
             </p>
         </div>
         <div class="col-sm-8 no-padding border-block block-white" style="padding: 35px 5px;">
-            <div class="row" data-bind="foreach:itemsRecommand">
-                <div class="item col-sm-3">
+            <div class="row"    >
+                <div class="item col-sm-3" th:each="rec:${recommands}">
                     <div class="thumbnail thumbnail-item-sm">
-                        <img alt="..." data-bind="attr: { src: $data.imageUrl}">
+                        <img alt="..."   th:src="${rec.imageUrl}">
 
                         <div class="caption">
-                            <a target="_blank" data-bind="text:$data.title,attr:{href:'item?id='+$data.id}"> </a>
+                            <!--<a target="_blank" th:text="${rec.title}" data-bind="text:$data.title,attr:{href:'item?id='+$data.id}"> </a>-->
+                            <a target="_blank" th:text="${rec.title}" data-bind="text:$data.title,attr:{href:'item?id='+$data.id}"> </a>
 
                             <p>
-                                <span>参考价</span><span>￥</span><span data-bind="text:$data.price"></span>
+                                <span>参考价</span><span>￥</span><span th:text="${rec.price}"></span>
                             </p>
                         </div>
                     </div>

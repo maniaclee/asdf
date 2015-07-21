@@ -12,13 +12,14 @@ p4c.init = function () {
     psyco.ui.carouselMulti($('#myCarousel'));
     // psyco.ui.carouselMultis($('#carousel-items-recommand'), 4);
     psyco.ui.carouselMultis($('#carousel-items-new-arrivals'), 2);
-    psyco.loadJsonKO('types', null, p4c.vm.typeTags);
-    psyco.loadJsonKO('recommond', null, p4c.vm.itemsRecommand);
+    psyco.ui.carouselMultis($('#carousel-items-recommand'), 4);
+    //psyco.loadJsonKO('types', null, p4c.vm.typeTags);
+    //psyco.loadJsonKO('recommond', null, p4c.vm.itemsRecommand);
     psyco.loadJsonKO('news/hot', null, p4c.vm.news);
     psyco.loadJsonKO('article/hot', null, p4c.vm.articles);
-    psyco.loadJsonKO('hot', null, p4c.vm.itemsHot, function (data) {
-        psyco.ui.carouselMultis($('#carousel-items-recommand'), 4);
-    });
+    //psyco.loadJsonKO('hot', null, p4c.vm.itemsHot, function (data) {
+    //    psyco.ui.carouselMultis($('#carousel-items-recommand'), 4);
+    //});
     // p4c.toSql(p4c.vm.types);
     var m = function (url) {
         // $.getJSON(url, function(data) {
@@ -33,8 +34,6 @@ p4c.init = function () {
             }
         });
     };
-    m('api/items/2054');
-    m('api/items/search?title=a');
 };
 $(document).ready(function () {
     ko.applyBindings(p4c.vm);

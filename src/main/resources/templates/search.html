@@ -31,13 +31,12 @@
 </head>
 <body>
 <div th:include="components :: nav"></div>
-
 <div class="container main-content" align="center">
 
     <div th:include="components :: search (${conditions.key},'')"></div>
     <!--<component-logo-search th:attr="params=|key: \'${conditions.key}\'|"></component-logo-search>-->
     <br/>
-
+    <div th:include="components :: nav_middle "></div>
     <div class="row" id="search-condition">
         <div class="navbar-primary">
             <nav class="navbar navbar-default">
@@ -52,12 +51,12 @@
                 <form class="navbar-form navbar-left" role="search" action="search"
                       method="get" id="searchSelectForm" data-bind="submit:search">
                     <!--<div class="form-group">-->
-                        <!--<input type="text" class="form-control" name="priceMin"-->
-                               <!--placeholder="￥最低价"-->
-                               <!--data-bind="value:conditions().priceMin==0?'':conditions().priceMin">-->
-                        <!-&#45;&#45; <input type="text" class="form-control" name="priceMax"-->
-                                 <!--placeholder="￥最高价"-->
-                                 <!--data-bind="value:conditions().priceMax==2147483647?'':conditions().priceMax">-->
+                    <!--<input type="text" class="form-control" name="priceMin"-->
+                    <!--placeholder="￥最低价"-->
+                    <!--data-bind="value:conditions().priceMin==0?'':conditions().priceMin">-->
+                    <!-&#45;&#45; <input type="text" class="form-control" name="priceMax" -->
+                    <!--placeholder="￥最高价"-->
+                    <!--data-bind="value:conditions().priceMax==2147483647?'':conditions().priceMax">-->
 
                     <!--</div>-->
                     <div class="form-group">
@@ -65,21 +64,13 @@
                     </div>
                     <div class="form-group">
                         <select class="form-control">
-                            <option >专利</option>
-                            <option >产品</option>
-                            <option >技术</option>
-                            <option >技能</option>
+                            <option>全部分类</option>
+                            <option>专利</option>
+                            <option>产品</option>
+                            <option>技术</option>
+                            <option>技能</option>
                         </select>
                     </div>
-                    <!--<div class="form-group" data-bind="if:user()!=null">-->
-                        <!--<div class="input-group ">-->
-								<!--<span class="input-group-addon "> <input type="checkbox"-->
-                                                                         <!--id="onlyShowExchange"-->
-                                                                         <!--data-bind="checked: conditions().onlyShowExchange,click:search">-->
-								<!--</span> <span class="input-group-addon">可交换</span>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <button type="submit" class="form-control btn btn-default">搜索</button>
                 </form>
             </nav>
         </div>
@@ -93,7 +84,7 @@
             <tr th:each="data : ${result.content}" class="">
                 <td><img th:attr="src=${data.imageUrl}"></td>
                 <td>
-                    <a th:text="${data.title}" th:attr="href='item?id='+${data.id}" target="_blank" class="color-theme" ></a>
+                    <a th:text="${data.title}" th:attr="href='item?id='+${data.id}" target="_blank" class="color-theme"></a>
 
                     <p>
                         <span class="color-theme">￥</span><span
@@ -112,25 +103,25 @@
             </tbody>
         </table>
         <!--<div class="row">-->
-            <!--<div class="item col-md-3" th:each="data : ${result.content}">-->
-                <!--<div class="thumbnail thumbnail-item-lg">-->
-                    <!--<img alt="..." th:attr="src=${data.imageUrl}">-->
+        <!--<div class="item col-md-3" th:each="data : ${result.content}">-->
+        <!--<div class="thumbnail thumbnail-item-lg">-->
+        <!--<img alt="..." th:attr="src=${data.imageUrl}">-->
 
-                    <!--<div class="caption">-->
-                        <!--<p class="text-left">-->
-                            <!--<span>参考价</span><span class="text-danger">￥</span><span class="text-danger" style="font-size:x-large" th:text="${data.price}"></span>-->
-							<!--<span class="text-right text-success">-->
-								<!--<span th:text="${data.type}==null ? '不详':${data.type.name}">参考价</span>-->
-							<!--</span>-->
-                        <!--</p>-->
+        <!--<div class="caption">-->
+        <!--<p class="text-left">-->
+        <!--<span>参考价</span><span class="text-danger">￥</span><span class="text-danger" style="font-size:x-large" th:text="${data.price}"></span>-->
+        <!--<span class="text-right text-success">-->
+        <!--<span th:text="${data.type}==null ? '不详':${data.type.name}">参考价</span>-->
+        <!--</span>-->
+        <!--</p>-->
 
-                        <!--<p class="text-left">-->
-                            <!--<a target="_blank" th:text="${data.title}" th:attr="href='item?id='+${data.id}">-->
-                            <!--</a>-->
-                        <!--</p>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
+        <!--<p class="text-left">-->
+        <!--<a target="_blank" th:text="${data.title}" th:attr="href='item?id='+${data.id}">-->
+        <!--</a>-->
+        <!--</p>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
         <!--</div>-->
         <div class="row" style="">
             <div th:if="${result.totalPages}">
